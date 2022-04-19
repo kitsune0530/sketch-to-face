@@ -43,7 +43,7 @@ class SummaryPage extends StatefulWidget {
 
 class _SummaryPageState extends State<SummaryPage> {
   bool _finished = false;
-  PainterController _controller;
+  // PainterController _controller;
 
   File imageFile;
   final picker = ImagePicker();
@@ -53,118 +53,140 @@ class _SummaryPageState extends State<SummaryPage> {
     double w = displayWidth(context);
     double h = displayWidth(context);
     MediaQuery.of(context).padding.top - kToolbarHeight;
-
+    var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    double canvasSize = 0;
+    if(isPortrait){
+      canvasSize = 128 * ((w / 128).floor()).toDouble();
+    }else{
+      canvasSize = 128 * ((h / 128).floor()).toDouble();
+    }
     return Scaffold(
+      bottomNavigationBar: buildBottomAppBar(w, context),
       body: Padding(
         padding: EdgeInsets.fromLTRB(w * 0.02, w * 0.08, w * 0.02, w * 0.08),
         child: SafeArea(
-          child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(height: w * 0.05),
-                Text("Canvas", style: TextStyle(fontSize: h * 0.08)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                        child: widget.image != null
-                            ? Container(
-                                width: w * 0.95,
-                                height: h * 0.6,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: FileImage(widget.image),
-                                    ),
-                                    border: Border.all(width: 1)),
-                              )
-                            : Container(
-                                decoration:
-                                    BoxDecoration(border: Border.all(width: 1)),
-                                width: w * 0.95,
-                                height: h * 0.6,
-                                //child:  _show(picture, context),
-                              )),
-                  ],
-                ),
-                SizedBox(
-                  height: h * 0.05,
-                ),
-                Text("Descriptions", style: TextStyle(fontSize: h * 0.08)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(border: Border.all(width: 1)),
-                      width: w * 0.95,
-                      height: h * 0.45,
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(
-                            h * 0.04, h * 0.02, h * 0.04, h * 0.02),
-                        child: Text(
-                          "  ${widget.gender} ${headchar("skin", "${widget.choosenSkin}")} ${headchar("face shape", "${widget.choosenShape}")} "
-                          "${headchar("eyes", "${widget.choosenEyes}")} ${headchar("eyelids", "${widget.choosenEyelids}")} ${headchar("nose", "${widget.choosenNose}")} "
-                          "${headchar("mouth", "${widget.choosenMouth}")} ${headchar("ears", "${widget.choosenEars}")} ${headchar("hair", "${widget.choosenHair}")} "
-                          "${headchar("eyebrows", "${widget.choosenEyebrows}")} ${headchar("beard", "${widget.choosenBeard}")}",
-                          style: TextStyle(fontSize: h * 0.05),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: h * 0.05,
-                ),
-                SizedBox(height: w * 0.05),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    SizedBox(
-                      width: w * 0.2,
-                      child: FlatButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DropdownPage(
-                                  image: widget.image,
-                                  gender: "${widget.gender}",
-                                ),
-                              ),
-                            );
-                          },
-                          child: Text("back"),
-                          color: Colors.grey,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0))),
-                    ),
-                    SizedBox(
-                      width: w * 0.4,
-                      child: FlatButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Generated(
-                                        image: widget.image,gender: "${widget.gender}", choosenSkin: checknull(widget.choosenSkin),
-                                  choosenShape: checknull(widget.choosenShape), choosenEyes: checknull(widget.choosenEyes), choosenEyelids: checknull(widget.choosenEyelids),
-                                  choosenNose: checknull(widget.choosenNose), choosenMouth: checknull(widget.choosenMouth), choosenEars: checknull(widget.choosenEars),
-                                  choosenHair: checknull(widget.choosenHair), choosenEyebrows: checknull(widget.choosenEyebrows), choosenBeard: checknull(widget.choosenBeard)
-                                      )),
-                            );
-                          },
-                          child: Text("Face Generate"),
-                          color: Colors.grey,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0))),
-                    ),
-                  ],
-                )
-              ],
-            ),
+          child: ListView(
+            // crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const Text("Canvas", style: TextStyle(fontSize: 20)),
+              buildSumCanvas(w, h, canvasSize),
+              const Text("Descriptions", style: TextStyle(fontSize: 20)),
+              buildSumDescription(w, h),
+            ],
           ),
         ),
       ),
+    );
+  }
+
+  BottomAppBar buildBottomAppBar(double w, BuildContext context) {
+    return BottomAppBar(
+      // color: Colors.white,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          SizedBox(
+            width: w * 0.2,
+            child: FlatButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DropdownPage(
+                        image: widget.image,
+                        gender: widget.gender,
+                      ),
+                    ),
+                  );
+                },
+                child: const Text("back"),
+                color: Colors.grey,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0))),
+          ),
+          SizedBox(
+            width: w * 0.4,
+            child: FlatButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Generated(
+                      image: widget.image,
+                      gender: widget.gender,
+                      choosenSkin: checknull(widget.choosenSkin),
+                      choosenShape: checknull(widget.choosenShape),
+                      choosenEyes: checknull(widget.choosenEyes),
+                      choosenEyelids: checknull(widget.choosenEyelids),
+                      choosenNose: checknull(widget.choosenNose),
+                      choosenMouth: checknull(widget.choosenMouth),
+                      choosenEars: checknull(widget.choosenEars),
+                      choosenHair: checknull(widget.choosenHair),
+                      choosenEyebrows: checknull(widget.choosenEyebrows),
+                      choosenBeard: checknull(widget.choosenBeard),
+                    ),
+                  ),
+                );
+              },
+              child: const Text("Face Generate"),
+              color: Colors.grey,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Row buildSumDescription(double w, double h) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          // decoration: BoxDecoration(border: Border.all(width: 1)),
+          width: w * 0.95,
+          // height: h * 0.45,
+          child: Padding(
+            padding:
+                EdgeInsets.fromLTRB(h * 0.04, h * 0.02, h * 0.04, h * 0.02),
+            child: Text(
+              "${widget.gender} ${headchar("skin", widget.choosenSkin)} ${headchar("face shape", widget.choosenShape)} "
+              "${headchar("eyes", widget.choosenEyes)} ${headchar("eyelids", widget.choosenEyelids)} ${headchar("nose", widget.choosenNose)} "
+              "${headchar("mouth", widget.choosenMouth)} ${headchar("ears", widget.choosenEars)} ${headchar("hair", widget.choosenHair)} "
+              "${headchar("eyebrows", widget.choosenEyebrows)} ${headchar("beard", widget.choosenBeard)}",
+              style: TextStyle(fontSize: h * 0.05),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row buildSumCanvas(double w, double h, double canvasSize) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          child: widget.image != null
+              ? Container(
+                  width: w * 0.95,
+                  height: h * 0.6,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: FileImage(widget.image),
+                      ),
+                      border: Border.all(width: 1)),
+                )
+              : Container(
+                  decoration: BoxDecoration(border: Border.all(width: 1)),
+                  width: canvasSize,
+                  height: canvasSize,
+                  //child:  _show(picture, context),
+                ),
+        ),
+      ],
     );
   }
 
@@ -180,38 +202,43 @@ class _SummaryPageState extends State<SummaryPage> {
     setState(() {
       _finished = true;
     });
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (BuildContext context) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text('View your image'),
-        ),
-        body: Container(
-            alignment: Alignment.center,
-            child: FutureBuilder<Uint8List>(
-              future: picture.toPNG(),
-              builder:
-                  (BuildContext context, AsyncSnapshot<Uint8List> snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.done:
-                    if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else {
-                      return Image.memory(snapshot.data);
-                    }
-                    break;
-                  default:
-                    return Container(
-                        child: const FractionallySizedBox(
-                      widthFactor: 0.1,
-                      child: AspectRatio(
-                          aspectRatio: 1.0, child: CircularProgressIndicator()),
-                      alignment: Alignment.center,
-                    ));
-                }
-              },
-            )),
-      );
-    }));
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('View your image'),
+            ),
+            body: Container(
+              alignment: Alignment.center,
+              child: FutureBuilder<Uint8List>(
+                future: picture.toPNG(),
+                builder:
+                    (BuildContext context, AsyncSnapshot<Uint8List> snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.done:
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        return Image.memory(snapshot.data);
+                      }
+                      break;
+                    default:
+                      return const FractionallySizedBox(
+                        widthFactor: 0.1,
+                        child: AspectRatio(
+                          aspectRatio: 1.0,
+                          child: CircularProgressIndicator(),
+                        ),
+                        alignment: Alignment.center,
+                      );
+                  }
+                },
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 }

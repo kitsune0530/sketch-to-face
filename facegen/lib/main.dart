@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:facegen/page/lobby.dart';
 import 'package:facegen/page/dropdown.dart';
 import 'package:facegen/page/canvas.dart';
+import 'dart:math';
 
 List<CameraDescription> cameras = [];
 Future<void> main() async {
