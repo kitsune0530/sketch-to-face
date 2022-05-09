@@ -1,4 +1,4 @@
-import 'package:facegen/page/lobby.dart';
+import 'package:facegen/page/main_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'sizehelper.dart';
@@ -52,7 +52,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Lobby()),
+                  MaterialPageRoute(builder: (context) => MainMenu()),
                 );
               },
               child: Center(

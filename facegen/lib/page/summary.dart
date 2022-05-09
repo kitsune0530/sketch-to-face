@@ -7,57 +7,74 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_draw/painter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../main.dart';
 
 class SummaryPage extends StatefulWidget {
-  String gender;
-  String choosenSkin;
-  String choosenShape;
-  String choosenEyes;
-  String choosenEyelids;
-  String choosenNose;
-  String choosenMouth;
-  String choosenEars;
-  String choosenHair;
-  String choosenEyebrows;
-  String choosenBeard;
   File image;
-  SummaryPage(
-      {Key key,
-      this.image,
-      this.gender,
-      this.choosenSkin,
-      this.choosenShape,
-      this.choosenEyes,
-      this.choosenEyelids,
-      this.choosenNose,
-      this.choosenMouth,
-      this.choosenEars,
-      this.choosenHair,
-      this.choosenEyebrows,
-      this.choosenBeard})
-      : super(key: key);
+  SummaryPage({
+    Key key,
+    this.image,
+  }) : super(key: key);
+
+  SummaryPage.setImage({
+    Key key,
+    this.image,
+  }) : super(key: key);
+
+
 
   @override
-  _SummaryPageState createState() => _SummaryPageState();
+  _SummaryPageState createState() => _SummaryPageState(image);
 }
 
 class _SummaryPageState extends State<SummaryPage> {
   bool _finished = false;
   // PainterController _controller;
 
+  String gender;
+  String _choosenSkin;
+  String _choosenShape;
+  String _choosenEyes;
+  String _choosenNose;
+  String _choosenMouth;
+  String _choosenEars;
+  String _choosenHair;
+  String _choosenEyebrows;
+  String _choosenBeard;
+  File image;
+
   File imageFile;
   final picker = ImagePicker();
+
+  _SummaryPageState(File image) {
+    print(" >>> Create Summary");
+    this.image = null;
+    print(" >>> Set Image =  null");
+    this.image = image;
+    print(" >>> Set New Image");
+
+    setChoosed();
+
+  }
+  // _SummaryPageState.setImage(this.image){
+  //
+  //   setChoosed();
+  // }
 
   @override
   Widget build(BuildContext context) {
     double w = displayWidth(context);
     double h = displayWidth(context);
     MediaQuery.of(context).padding.top - kToolbarHeight;
+
     var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
     double canvasSize = 0;
-    if(isPortrait){
+
+    if (isPortrait) {
       canvasSize = 128 * ((w / 128).floor()).toDouble();
-    }else{
+    } else {
       canvasSize = 128 * ((h / 128).floor()).toDouble();
     }
     return Scaffold(
@@ -65,7 +82,7 @@ class _SummaryPageState extends State<SummaryPage> {
       body: Padding(
         padding: EdgeInsets.fromLTRB(w * 0.02, w * 0.08, w * 0.02, w * 0.08),
         child: SafeArea(
-          child: ListView(
+          child: Column(
             // crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               const Text("Canvas", style: TextStyle(fontSize: 20)),
@@ -74,6 +91,65 @@ class _SummaryPageState extends State<SummaryPage> {
               buildSumDescription(w, h),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+
+  Row buildSumCanvas(double w, double h, double canvasSize) {
+    print(" >>> Build Sum Canvas");
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          child: image != null
+              ? Container(
+            width: w * 0.95,
+            height: w * 0.95,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: FileImage(image),
+                ),
+                border: Border.all(width: 1)),
+          )
+              : Container(
+            decoration: BoxDecoration(border: Border.all(width: 1)),
+            width: w * 0.95,
+            height: w * 0.95,
+            //child:  _show(picture, context),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Expanded buildSumDescription(double w, double h) {
+    return  Expanded(
+      child: Container(
+        width: w * 0.95,
+        // height: h * 0.3,
+        child: Padding(
+            padding:
+            EdgeInsets.fromLTRB(h * 0.04, h * 0.02, h * 0.04, h * 0.02),
+            child: Scrollbar(
+              child: SingleChildScrollView(
+
+                child: Text(
+                  "${gender}\n"
+                      "${PrintDes("skin, ", _choosenSkin)}"
+                      "${PrintDes("shape, ", _choosenShape)}"
+                      "${PrintDes("eyes, ", _choosenEyes)}"
+                      "${PrintDes("nose, ", _choosenNose)}"
+                      "${PrintDes("mouth, ", _choosenMouth)}"
+                      "${PrintDes("ears, ", _choosenEars)}"
+                      "${PrintDes("hair, ", _choosenHair)}"
+                      "${PrintDes("eyebrows, ", _choosenEyebrows)}"
+                      "${PrintDes("beard", _choosenBeard)}",
+                  style: TextStyle(fontSize: h * 0.05),
+                ),
+              ),
+            )
         ),
       ),
     );
@@ -89,15 +165,15 @@ class _SummaryPageState extends State<SummaryPage> {
             width: w * 0.2,
             child: FlatButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DropdownPage(
-                        image: widget.image,
-                        gender: widget.gender,
-                      ),
-                    ),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => DropdownPage(
+                  //       image: this.image,
+                  //     ),
+                  //   ),
+                  // )
+                  Navigator.pop(context);
                 },
                 child: const Text("back"),
                 color: Colors.grey,
@@ -108,28 +184,18 @@ class _SummaryPageState extends State<SummaryPage> {
             width: w * 0.4,
             child: FlatButton(
               onPressed: () {
+                // this.image = null;
+
+                Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Generated(
-                      image: widget.image,
-                      gender: widget.gender,
-                      choosenSkin: checknull(widget.choosenSkin),
-                      choosenShape: checknull(widget.choosenShape),
-                      choosenEyes: checknull(widget.choosenEyes),
-                      choosenEyelids: checknull(widget.choosenEyelids),
-                      choosenNose: checknull(widget.choosenNose),
-                      choosenMouth: checknull(widget.choosenMouth),
-                      choosenEars: checknull(widget.choosenEars),
-                      choosenHair: checknull(widget.choosenHair),
-                      choosenEyebrows: checknull(widget.choosenEyebrows),
-                      choosenBeard: checknull(widget.choosenBeard),
-                    ),
+                    builder: (context) => Generated(image: this.image),
                   ),
                 );
               },
-              child: const Text("Face Generate"),
-              color: Colors.grey,
+              child: const Text("Generate"),
+              color: Colors.blueAccent,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0),
               ),
@@ -140,63 +206,9 @@ class _SummaryPageState extends State<SummaryPage> {
     );
   }
 
-  Row buildSumDescription(double w, double h) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          // decoration: BoxDecoration(border: Border.all(width: 1)),
-          width: w * 0.95,
-          // height: h * 0.45,
-          child: Padding(
-            padding:
-                EdgeInsets.fromLTRB(h * 0.04, h * 0.02, h * 0.04, h * 0.02),
-            child: Text(
-              "${widget.gender} ${headchar("skin", widget.choosenSkin)} ${headchar("face shape", widget.choosenShape)} "
-              "${headchar("eyes", widget.choosenEyes)} ${headchar("eyelids", widget.choosenEyelids)} ${headchar("nose", widget.choosenNose)} "
-              "${headchar("mouth", widget.choosenMouth)} ${headchar("ears", widget.choosenEars)} ${headchar("hair", widget.choosenHair)} "
-              "${headchar("eyebrows", widget.choosenEyebrows)} ${headchar("beard", widget.choosenBeard)}",
-              style: TextStyle(fontSize: h * 0.05),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 
-  Row buildSumCanvas(double w, double h, double canvasSize) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          child: widget.image != null
-              ? Container(
-                  width: w * 0.95,
-                  height: h * 0.6,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: FileImage(widget.image),
-                      ),
-                      border: Border.all(width: 1)),
-                )
-              : Container(
-                  decoration: BoxDecoration(border: Border.all(width: 1)),
-                  width: canvasSize,
-                  height: canvasSize,
-                  //child:  _show(picture, context),
-                ),
-        ),
-      ],
-    );
-  }
 
-  String headchar(String headch, String data) {
-    String text = "";
-    if (data.length != 1) {
-      text = data + " " + headch;
-    }
-    return text;
-  }
+
 
   void _show(PictureDetails picture, BuildContext context) {
     setState(() {
@@ -240,5 +252,38 @@ class _SummaryPageState extends State<SummaryPage> {
         },
       ),
     );
+  }
+
+  void setChoosed() async {
+
+    SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+    setState(() {
+      // for (var i = 0; i < desType.length; i++) {
+      //   desType[i] = sharedPrefs.getString(name ?? "");
+      //   sharedPrefs.getString(name ?? "");
+      // }
+
+      // gender = sharedPrefs.getString(desType[0] ?? "");
+      // _choosenSkin = sharedPrefs.getString("Skin Color" ?? "");
+      // _choosenShape = sharedPrefs.getString("Face Shape" ?? "");
+      // _choosenEyes = sharedPrefs.getString("Eyes" ?? "");
+      // _choosenNose = sharedPrefs.getString("Nose" ?? "");
+      // _choosenMouth = sharedPrefs.getString("Mouth" ?? "");
+      // _choosenEars = sharedPrefs.getString("Ears" ?? "");
+      // _choosenHair = sharedPrefs.getString("Hair" ?? "");
+      // _choosenEyebrows = sharedPrefs.getString("Eyebrows" ?? "");
+      // _choosenBeard = sharedPrefs.getString("Beard" ?? "");
+
+      gender = sharedPrefs.getString(desType[0]);
+      _choosenSkin = sharedPrefs.getString("Skin Color");
+      _choosenShape = sharedPrefs.getString("Face Shape");
+      _choosenEyes = sharedPrefs.getString("Eyes");
+      _choosenNose = sharedPrefs.getString("Nose");
+      _choosenMouth = sharedPrefs.getString("Mouth");
+      _choosenEars = sharedPrefs.getString("Ears");
+      _choosenHair = sharedPrefs.getString("Hair");
+      _choosenEyebrows = sharedPrefs.getString("Eyebrows");
+      _choosenBeard = sharedPrefs.getString("Beard");
+    });
   }
 }
