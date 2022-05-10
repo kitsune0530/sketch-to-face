@@ -6,6 +6,7 @@ import 'dart:developer' as dev;
 
 import 'package:facegen/page/canvas.dart';
 import 'package:facegen/shared_prefs_helper.dart';
+import 'package:facegen/sizing.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:facegen/helper/sizehelper.dart';
@@ -35,6 +36,7 @@ class Generated extends StatefulWidget {
 }
 
 class _GeneratedState extends State<Generated> {
+
 
   String stringByte = "";
   Image generatedImage;
@@ -168,6 +170,8 @@ class _GeneratedState extends State<Generated> {
     super.initState();
   }
 
+  // ContextSize size = new ContextSize();
+
   @override
   Widget build(BuildContext context) {
     double w = displayWidth(context);
@@ -177,11 +181,27 @@ class _GeneratedState extends State<Generated> {
         .padding
         .top - kToolbarHeight;
 
+    // double pad = w * 0.01;
+    // double halfWidth = w * 0.5 - pad;
+    // double width = w - pad;
+    // double height = h - pad;
+    // size.setTitleFont(w * 0.1);
+    //
+    // size.setTextFont(w * 0.05);
+    //
+    //
+    //
+    // size.setPad(pad);
+    // size.setHalfWidth(halfWidth - pad * 10);
+    // size.setWidth(width - pad);
+    // size.setHeight(height - pad * 10);
+    // size.setW(w);
+    // size.setH(h);
     // dev.log(descriptionList);
 
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.fromLTRB(w * 0.02, w * 0.08, w * 0.02, w * 0.08),
+        padding: EdgeInsets.all(size.getPad()),
         child: SafeArea(
           child: Container(
             child: Column(
@@ -191,7 +211,7 @@ class _GeneratedState extends State<Generated> {
                 buildCanvas(w, h),
                 Container(
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, w * 0.08, 0, w * 0.08),
+                    padding: EdgeInsets.all(size.getPad()*5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -199,7 +219,7 @@ class _GeneratedState extends State<Generated> {
                           textColor: Colors.black,
                           color: Colors.grey,
                           child:
-                          Text("1", style: TextStyle(fontSize: w * 0.05)),
+                          Text("1", style: TextStyle(fontSize: size.getTextFont())),
                           onPressed: () {},
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -208,7 +228,7 @@ class _GeneratedState extends State<Generated> {
                           textColor: Colors.black,
                           color: Colors.grey,
                           child:
-                          Text("2", style: TextStyle(fontSize: w * 0.05)),
+                          Text("2", style: TextStyle(fontSize: size.getTextFont())),
                           onPressed: () {},
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -217,7 +237,7 @@ class _GeneratedState extends State<Generated> {
                           textColor: Colors.black,
                           color: Colors.grey,
                           child:
-                          Text("3", style: TextStyle(fontSize: w * 0.05)),
+                          Text("3", style: TextStyle(fontSize: size.getTextFont())),
                           onPressed: () {},
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -242,6 +262,7 @@ class _GeneratedState extends State<Generated> {
     File file = await File('${tempDir.path}/generated${number}.png').create();
     print('${tempDir.path}/generated${number}.png');
     file.writeAsBytesSync(imageInUnit8List);
+    dev.log("Image Path : "+ '${tempDir.path}/generated${number}.png');
     return ('${tempDir.path}/generated${number}.png');
   }
 
@@ -274,7 +295,7 @@ class _GeneratedState extends State<Generated> {
   Column buildCanvas(double w, double h) {
     return Column(
       children: [
-        Text("Generated Face", style: TextStyle(fontSize: 20)),
+        Text("Generated Face", style: TextStyle(fontSize: size.getTitleFont())),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -335,84 +356,109 @@ class _GeneratedState extends State<Generated> {
     );
   }
 
+  File genFile;
   Expanded buildButtons(double w, BuildContext context) {
     return Expanded(
       child: Column(
         children: [
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             SizedBox(
-              height: w * 0.1,
-              width: w * 0.75, // match_parent
+              height: size.getWidth() * 0.1,
+              width: size.getWidth()*0.7, // match_parent
               child: RaisedButton(
                   textColor: Colors.black,
                   color: Colors.blue,
-                  child: Text("Edit Sketch or Description",
-                      style: TextStyle(fontSize: w * 0.05)),
+                  child: Text("Edit Sketch / Description",
+                      style: TextStyle(fontSize: size.getTextFont())),
                   onPressed: () {
                     Navigator.pop(context);
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => Canvas(image: input)),
-                    // );
+
                   },
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0))),
+                      borderRadius: BorderRadius.circular(10.0))),
             )
           ]),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.save_alt_outlined),
-                splashColor: Colors.black,
-                onPressed: () async {
-                  File genFile;
+          Padding(
+            padding: EdgeInsets.all(size.getPad()*5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.save_alt_outlined),
+                  splashColor: Colors.black,
+                  onPressed: () async {
 
-                  uint8ToFile(generatedByte, "1").then((value) {
-                    genFile = File(value);
-                  });
+                    dev.log("Saving In Progress");
 
-                  if (genFile == null) return;
-                  final Directory extDir = await getApplicationDocumentsDirectory();
-                  String dirPath = extDir.path;
+                    await uint8ToFile(generatedByte, "1").then((value) {
+                      print(this.genFile.toString());
+                      // this.genFile = File.fromRawPath(generatedByte);
 
-                  DateTime now = new DateTime.now();
-                  DateTime date = new DateTime(
-                      now.year, now.month, now.day, now.hour, now.minute, now.second);
-                  final String fileName = basename("save${date.toString()}.png");
-                  final File localImage = await genFile.copy('$dirPath/$fileName');
-
-
-                  if (genFile != null && genFile.path != null) {
-                    setState(() {
-                      _saveProgress = 'saving in progress...';
+                      this.genFile = File(value);
+                      print(this.genFile.toString());
                     });
 
-                    GallerySaver.saveImage(genFile.path);
-                    setState(() {
-                      _saveProgress = 'Save Complelted...';
-                    });
-                    dev.log(_saveProgress);
-                  }
-                },
-              ),
+                    if (genFile == null) {
+                      dev.log("No File To Save!");
+                      return null;
+                    }else{
 
-              IconButton(
-                  onPressed: () =>
-                      showDialog(
-                        barrierColor: Colors.black26,
-                        context: context,
-                        builder: (context) {
-                          return CustomAlertDialog(
-                            title: "Warning!",
-                            description: "The created image will disappear\n" +
-                                "Want to return to the main page?",
-                          );
-                        },
-                      ),
-                  icon: Icon(Icons.home_sharp))
-            ],
+                      dev.log("Saving In Progress");
+                      final Directory extDir = await getApplicationDocumentsDirectory();
+                      String dirPath = extDir.path;
+
+                      DateTime now = new DateTime.now();
+                      DateTime date = new DateTime(
+                          now.year, now.month, now.day, now.hour, now.minute, now.second);
+                      final String fileName = basename("save${date.toString()}.png");
+                      final File localImage = await genFile.copy('$dirPath/$fileName');
+
+
+                      if (genFile != null && genFile.path != null) {
+                        setState(() {
+                          // _saveProgress = 'saving in progress...';
+                        });
+
+                        GallerySaver.saveImage(genFile.path);
+                        setState(() {
+                          // _saveProgress = 'Save Complelted...';
+
+                        });
+                        // dev.log(_saveProgress);
+
+                        dev.log("Save Successfully");
+                        // return AlertDialog(
+                        //   title: Text("Image Saved",style: TextStyle(fontSize: size.getTextFont()),),
+                        // );
+                    }
+
+
+                    }
+                  },
+                ),
+
+                IconButton(
+                    onPressed: () =>
+                        showDialog(
+                          barrierColor: Colors.black26,
+                          context: context,
+                          builder: (context) {
+                            return Container(
+                              child: AlertDialog(
+                                title: Text("Image Saved." ,textAlign: TextAlign.center,style: TextStyle(fontSize: size.getTextFont()),),
+                              ),
+                            );
+                            return
+                              CustomAlertDialog(
+                              title: "Warning!",
+                              description: "The created image will disappear\n" +
+                                  "Want to return to the main page?",
+                            );
+                          },
+                        ),
+                    icon: Icon(Icons.home_sharp))
+              ],
+            ),
           )
         ],
       ),

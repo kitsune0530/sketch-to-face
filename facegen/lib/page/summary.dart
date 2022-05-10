@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:facegen/page/dropdown.dart';
 import 'package:facegen/page/result.dart';
 import 'package:facegen/helper/sizehelper.dart';
+import 'package:facegen/sizing.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_draw/painter.dart';
@@ -62,7 +63,7 @@ class _SummaryPageState extends State<SummaryPage> {
   //
   //   setChoosed();
   // }
-
+  // ContextSize size = new ContextSize();
   @override
   Widget build(BuildContext context) {
     double w = displayWidth(context);
@@ -79,15 +80,19 @@ class _SummaryPageState extends State<SummaryPage> {
     }
     return Scaffold(
       bottomNavigationBar: buildBottomAppBar(w, context),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(w * 0.02, w * 0.08, w * 0.02, w * 0.08),
-        child: SafeArea(
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(size.getPad()),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             // crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Text("Canvas", style: TextStyle(fontSize: 20)),
+              Text("Canvas", style: TextStyle(fontSize: size.getTitleFont())),
               buildSumCanvas(w, h, canvasSize),
-              const Text("Descriptions", style: TextStyle(fontSize: 20)),
+              Padding(
+                padding: EdgeInsets.only( top:size.getPad()),
+                child: Text("Descriptions", style: TextStyle(fontSize: size.getTitleFont())),
+              ),
               buildSumDescription(w, h),
             ],
           ),
@@ -127,12 +132,12 @@ class _SummaryPageState extends State<SummaryPage> {
   Expanded buildSumDescription(double w, double h) {
     return  Expanded(
       child: Container(
-        width: w * 0.95,
+        width: size.getWidth(),
         // height: h * 0.3,
         child: Padding(
-            padding:
-            EdgeInsets.fromLTRB(h * 0.04, h * 0.02, h * 0.04, h * 0.02),
+            padding: EdgeInsets.all(size.getPad()),
             child: Scrollbar(
+              isAlwaysShown: true,
               child: SingleChildScrollView(
 
                 child: Text(
@@ -158,50 +163,53 @@ class _SummaryPageState extends State<SummaryPage> {
   BottomAppBar buildBottomAppBar(double w, BuildContext context) {
     return BottomAppBar(
       // color: Colors.white,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          SizedBox(
-            width: w * 0.2,
-            child: FlatButton(
+      child: Padding(
+        padding: EdgeInsets.all(size.getPad()),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            SizedBox(
+              width: w * 0.2,
+              child: FlatButton(
+                  onPressed: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => DropdownPage(
+                    //       image: this.image,
+                    //     ),
+                    //   ),
+                    // )
+                    Navigator.pop(context);
+                  },
+                  child: Text("back", style: TextStyle(fontSize: size.getTextFont()),),
+                  color: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
+            ),
+            SizedBox(
+              width: w * 0.4,
+              child: FlatButton(
                 onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => DropdownPage(
-                  //       image: this.image,
-                  //     ),
-                  //   ),
-                  // )
-                  Navigator.pop(context);
-                },
-                child: const Text("back"),
-                color: Colors.grey,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0))),
-          ),
-          SizedBox(
-            width: w * 0.4,
-            child: FlatButton(
-              onPressed: () {
-                // this.image = null;
+                  // this.image = null;
 
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Generated(image: this.image),
-                  ),
-                );
-              },
-              child: const Text("Generate"),
-              color: Colors.blueAccent,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Generated(image: this.image),
+                    ),
+                  );
+                },
+                child: Text("Generate", style: TextStyle(fontSize: size.getTextFont()),),
+                color: Colors.blueAccent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

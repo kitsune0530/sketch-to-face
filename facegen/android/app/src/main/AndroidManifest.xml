@@ -5,7 +5,8 @@
    <application
         android:label="facegen"
         android:icon="@mipmap/ic_launcher"
-       android:usesCleartextTraffic="true">
+       android:usesCleartextTraffic="true"
+       android:requestLegacyExternalStorage="true" >
 
        <activity android:name="io.flutter.embedding.android.FlutterActivity"
            android:theme="@style/LaunchTheme"

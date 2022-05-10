@@ -592,11 +592,12 @@ class _WebSummaryState extends State<WebSummary> {
                     return SizedBox(
                       width: this.halfWidth/2,
                       height: this.halfWidth/2,
-                      child: CustomAlertDialog(
-                        title: "Warning!",
-                        description: "The created image will disappear\n" +
-                            "Make sure to save the image before return.",width: this.halfWidth/2, height: this.halfWidth/2, textFont: this.textFont, titleFont: this.titleFont,
-                      ),
+                      child: Text("a")
+                      // CustomAlertDialog(
+                      //   title: "Warning!",
+                      //   description: "The created image will disappear\n" +
+                      //       "Make sure to save the image before return."
+                      // ),
                     );
                   },
                 ),

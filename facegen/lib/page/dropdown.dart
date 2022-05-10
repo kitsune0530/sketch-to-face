@@ -5,6 +5,7 @@ import 'package:facegen/page/canvas.dart';
 import 'package:facegen/page/summary.dart';
 import 'package:facegen/page/main_mobile.dart';
 import 'package:facegen/helper/sizehelper.dart';
+import 'package:facegen/sizing.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:facegen/page/canvas.dart';
@@ -51,18 +52,10 @@ class _DropdownPageState extends State<DropdownPage> {
 
 
   _DropdownPageState(this.image) {
-    // _choosenSkin = 'Light';
-    // _choosenShape = 'Square/Triangle';
-    // _choosenEyes = 'Monolid';
-    // _choosenNose =  'Small';
-    // _choosenMouth = 'Small';
-    // _choosenEars = 'Hidden';
-    // _choosenHair = 'None';
-    // _choosenEyebrows ='None';
-    // _choosenBeard = 'None';
     setChosen();
   }
 
+  // ContextSize size = new ContextSize();
 
   @override
   Widget build(BuildContext context) {
@@ -73,47 +66,47 @@ class _DropdownPageState extends State<DropdownPage> {
         backgroundColor: Colors.white,
         bottomNavigationBar: buildBottomAppBar(w, context),
         body: Padding(
-          padding: EdgeInsets.fromLTRB(w * 0.02, w * 0.02, w * 0.005, w * 0.02),
+          padding:EdgeInsets.all(size.getPad()),
           child: SafeArea(
               child: Container(
             child: ListView(
               children: <Widget>[
-                Row(children: const <Widget>[
+                Row(children: <Widget>[
                   Text(
-                    "Characters",
+                    "Description",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
-                        fontSize: 20,
+                        fontSize: size.getTitleFont(),
                         color: Colors.black),
                   ),
                 ]),
 
 
 
-                Container(
-                  child: image != null
-                      ? Container(
-                    width: w * 0.95,
-                    height: w * 0.95,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: FileImage(image),
-                        ),
-                        border: Border.all(width: 1)),
-                  )
-                      : Container(
-                    decoration: BoxDecoration(border: Border.all(width: 1)),
-                    width: w * 0.95,
-                    height: w * 0.95,
-                    //child:  _show(picture, context),
-                  ),
-                ),
+                // Container(
+                //   child: image != null
+                //       ? Container(
+                //     width: size.getWidth(),
+                //     height: size.getWidth(),
+                //     decoration: BoxDecoration(
+                //         image: DecorationImage(
+                //           image: FileImage(image),
+                //         ),
+                //         border: Border.all(width: 1)),
+                //   )
+                //       : Container(
+                //     decoration: BoxDecoration(border: Border.all(width: 1)),
+                //     width: size.getWidth(),
+                //     height: size.getWidth(),
+                //     //child:  _show(picture, context),
+                //   ),
+                // ),
 
 
 
                 Padding(
                   padding: EdgeInsets.fromLTRB(
-                      w * 0.03, w * 0.008, w * 0.008, w * 0.01),
+                      size.getPad(), size.getPad(),size.getPad(), size.getPad()),
                   child: Column(
                     children: [
                       buildFutureDropdown(h, w, "Skin Color", skinList),
@@ -161,55 +154,58 @@ class _DropdownPageState extends State<DropdownPage> {
   BottomAppBar buildBottomAppBar(double w, BuildContext context) {
     return BottomAppBar(
       // color: Colors.white,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          SizedBox(
-            width: w * 0.2,
-            child: FlatButton(
-                onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => Canvas(image: image)),
-                  // );
+      child: Padding(
+        padding: EdgeInsets.all(size.getPad()),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            SizedBox(
+              width: w * 0.2,
+              child: FlatButton(
+                  onPressed: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => Canvas(image: image)),
+                    // );
 
-                  Navigator.pop(context);
-                },
-                child: Text("back"),
-                color: Colors.grey,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0))),
-          ),
-          SizedBox(
-            width: w * 0.2,
-            child: FlatButton(
-                onPressed: () {
-                  // Navigator.pop(context);
-                  // Navigator.pushAndRemoveUntil(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (BuildContext context) => SummaryPage(
-                  //       image: image,
-                  //     ),
-                  //   ),
-                  //   ModalRoute.withName('/'),
-                  // );
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SummaryPage.setImage(
-                        image: image,
+                    Navigator.pop(context);
+                  },
+                  child: Text("back", style: TextStyle(fontSize: size.getTextFont()),),
+                  color: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
+            ),
+            SizedBox(
+              width: w * 0.2,
+              child: FlatButton(
+                  onPressed: () {
+                    // Navigator.pop(context);
+                    // Navigator.pushAndRemoveUntil(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (BuildContext context) => SummaryPage(
+                    //       image: image,
+                    //     ),
+                    //   ),
+                    //   ModalRoute.withName('/'),
+                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SummaryPage.setImage(
+                          image: image,
+                        ),
                       ),
-                    ),
-                  );
-                },
-                child: Text("next"),
-                color: Colors.grey,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0))),
-          ),
-        ],
+                    );
+                  },
+                  child: Text("next", style: TextStyle(fontSize: size.getTextFont()),),
+                  color: Colors.blue,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -221,28 +217,33 @@ class _DropdownPageState extends State<DropdownPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Text(
-          name,
-          style: const TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w600,
+        SizedBox(
+          width: size.getWidth()*0.3,
+          child: Text(
+            name,
+            style: TextStyle(
+              fontSize: size.getTextFont(),
+              color: Colors.black,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
         // SizedBox(width: w * 0.1),
-        SizedBox(
-          width: w * 0.6,
+        Expanded(
+          // width: size.getWidth()*0.7,
           child: DropdownButton<String>(
             value: dropdownValue,
-            style: const TextStyle(
+            style:  TextStyle(
+              fontSize: size.getTextFont(),
               color: Colors.black,
             ),
             items: list.map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
-                child: Text(value),
+                child: Text(value, textAlign: TextAlign.right,),
               );
             }).toList(),
-            hint: const Text(
+            hint: Text(
               "Please Select",
               style: TextStyle(
                 color: Colors.black,

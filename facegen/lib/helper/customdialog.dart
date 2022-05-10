@@ -2,28 +2,35 @@ import 'package:facegen/page/main_mobile.dart';
 import 'package:facegen/web/main_web.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import '../main.dart';
 import 'sizehelper.dart';
+import 'package:facegen/sizing.dart';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 class CustomAlertDialog extends StatefulWidget {
-  CustomAlertDialog(
-      {Key key,
-      this.title,
-      this.description,
-      this.width,
-      this.height,
-      this.titleFont,
-      this.textFont})
-      : super(key: key);
 
-  final String title, description;
-  double width, height, titleFont, textFont;
+  CustomAlertDialog({Key key,this.title,this.description}) : super(key: key);
+  String title = "", description  ="";
 
   @override
   _CustomAlertDialogState createState() => _CustomAlertDialogState();
 }
 
 class _CustomAlertDialogState extends State<CustomAlertDialog> {
+
+
+  // ContextSize size = new ContextSize();
+  double width , height, titleFont, textFont;
+
+  _CustomAlertDialogState(){
+    this.width = size.getWidth();
+    print(this.height);
+    this.height = size.getHeight();
+    print(this.height);
+    this.titleFont = size.getTitleFont();
+    this.textFont = size.getTextFont();
+  }
+
   @override
   Widget build(BuildContext context) {
     double h = displayHeight(context);
@@ -35,15 +42,15 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: Container(
-        width: widget.width,
-        height: widget.height,
+        width: width,
+        height: height/2,
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Container(
-                height: widget.height*0.6,
+                // height: this.height*0.4,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -52,7 +59,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
                       child: Text(
                         "${widget.title}",
                         style: TextStyle(
-                          fontSize: widget.titleFont,
+                          fontSize: titleFont,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -60,7 +67,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
                     Text(
                       "${widget.description}",
                       style: TextStyle(
-                        fontSize: widget.textFont,
+                        fontSize: textFont,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -73,7 +80,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: widget.width * 0.1,
+                height: width * 0.1,
                 child: InkWell(
                   highlightColor: Colors.grey[200],
                   onTap: () {
@@ -94,7 +101,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
                     child: Text(
                       "Start Over",
                       style: TextStyle(
-                        fontSize: widget.textFont,
+                        fontSize: textFont,
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.bold,
                       ),
@@ -107,7 +114,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: widget.width * 0.1,
+                height: width * 0.1,
                 child: InkWell(
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(15.0),
@@ -121,7 +128,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
                     child: Text(
                       "Cancel",
                       style: TextStyle(
-                        fontSize: widget.textFont,
+                        fontSize: textFont,
                         fontWeight: FontWeight.normal,
                       ),
                     ),

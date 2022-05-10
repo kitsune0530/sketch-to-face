@@ -1,23 +1,47 @@
 // ignore_for_file: deprecated_member_use, prefer_const_constructors
 
 import 'package:facegen/page/canvas.dart';
+import 'package:facegen/page/view_gallery.dart';
 import 'package:facegen/shared_prefs_helper.dart';
+import 'package:facegen/sizing.dart';
 import 'package:flutter/material.dart';
 import 'package:facegen/helper/sizehelper.dart';
 import 'package:flutter/services.dart';
 
+import 'dart:developer' as dev;
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../main.dart';
 
 class MainMenu extends StatelessWidget {
   MainMenu(){
     SharedPrefsHelper.resetValues();
   }
+  // ContextSize size = new ContextSize();
 
   @override
   Widget build(BuildContext context) {
     double w = displayWidth(context);
     double h = displayHeight(context);
     MediaQuery.of(context).padding.top - kToolbarHeight;
+
+    double pad = w * 0.01;
+    double halfWidth = w * 0.5 - pad;
+    double width = w - pad;
+    double height = h - pad;
+    size.setTitleFont(w * 0.1);
+
+    size.setTextFont(w * 0.05);
+
+
+
+    size.setPad(pad);
+    size.setHalfWidth(halfWidth - pad * 10);
+    size.setWidth(width - pad);
+    size.setHeight(height - pad * 10);
+    size.setW(w);
+    size.setH(h);
+
     return Scaffold(
         backgroundColor: Colors.white24,
         body: Center(
@@ -38,8 +62,8 @@ class MainMenu extends StatelessWidget {
                 child: Column(
                   children: [
                     buildCanvasButton(w, context),
-                    buildImageViewerButton(w),
-                    buildExitButton(w)
+                    buildImageViewerButton(w, context),
+                    buildButton()
                   ],
                 ),
               )
@@ -48,56 +72,64 @@ class MainMenu extends StatelessWidget {
         ));
   }
 
-  Padding buildExitButton(double w) {
+
+  Padding buildButton() {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(size.getPad()),
       child: SizedBox(
-        height: w * 0.1,
-        width: w * 0.75, // match_parent
+        height: size.getWidth()* 0.1,
+        width: size.getWidth()*0.7, // match_parent
         child: RaisedButton(
             textColor: Colors.black,
             color: Colors.grey,
-            child: Text("Exit", style: TextStyle(fontSize: w * 0.06)),
+            child: Text("Exit", style: TextStyle(fontSize: size.getTextFont())),
             onPressed: () {
               SystemNavigator.pop();
             },
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0))),
+                borderRadius: BorderRadius.circular(10.0))),
       ),
     );
   }
 
 
-  Padding buildImageViewerButton(double w) {
+
+  Padding buildImageViewerButton(double w, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(size.getPad()),
       child: SizedBox(
-        height: w * 0.1,
-        width: w * 0.75, // match_parent
+        height: size.getWidth()*0.1,
+        width: size.getWidth()*0.7, // match_parent
         child: RaisedButton(
             textColor: Colors.black,
             color: Colors.grey,
             child:
-                Text("View Saved Images", style: TextStyle(fontSize: w * 0.06)),
-            onPressed: () {},
+                Text("View Saved Images", style: TextStyle(fontSize: size.getTextFont())),
+            onPressed: () {
+              dev.log("Open Gallery");
+              // Navigator.push(
+              // context,
+              // MaterialPageRoute(builder: (context) => OpenGallery()),
+              // );
+            },
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0))),
+                borderRadius: BorderRadius.circular(10.0))),
       ),
     );
   }
 
   Padding buildCanvasButton(double w, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding:  EdgeInsets.all(size.getPad()),
       child: SizedBox(
-        height: w * 0.1,
-        width: w * 0.75, // match_parent
+        height: size.getWidth() * 0.1,
+        width: size.getWidth() * 0.7, // match_parent
         child: RaisedButton(
             textColor: Colors.black,
             color: Colors.grey,
             child: Text(
               "Create Face",
-              style: TextStyle(fontSize: w * 0.06),
+              style: TextStyle(fontSize:size.getTextFont()),
             ),
             onPressed: () {
               Navigator.push(
@@ -106,7 +138,7 @@ class MainMenu extends StatelessWidget {
               );
             },
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0))),
+                borderRadius: BorderRadius.circular(10.0))),
       ),
     );
   }

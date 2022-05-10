@@ -5,6 +5,7 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'package:facegen/page/dropdown.dart';
 import 'package:facegen/page/main_mobile.dart';
+import 'package:facegen/sizing.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -17,6 +18,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
+
+import '../main.dart';
 
 class Canvas extends StatefulWidget {
   File image;
@@ -75,6 +78,7 @@ class _CanvasState extends State<Canvas> {
       imageFile = File(pickerFile.path);
     });
   }
+  // ContextSize size = new ContextSize();
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +90,7 @@ class _CanvasState extends State<Canvas> {
       backgroundColor: Colors.white,
       bottomNavigationBar: buildBottomAppBar(w, context),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(size.getPad()),
         child: SafeArea(
           child: Container(
             child: Column(
@@ -127,10 +131,10 @@ class _CanvasState extends State<Canvas> {
                   // _finished = false;
                 });
               },
-              child: Text("Cancel"),
-              color: Colors.grey,
+              child: Text("Cancel", style: TextStyle(fontSize: size.getTextFont()),),
+              color: Colors.red,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(10.0),
               ),
             ),
             FlatButton(
@@ -151,10 +155,10 @@ class _CanvasState extends State<Canvas> {
                   // _finished = true;
                 });
               },
-              child: Text("Confirm"),
+              child: Text("Confirm", style: TextStyle(fontSize: size.getTextFont()),),
               color: Colors.green,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(10.0),
               ),
             ),
           ],
@@ -167,11 +171,11 @@ class _CanvasState extends State<Canvas> {
           ),
           title: Text(
             "Confirm Drawing",
-            style: TextStyle(fontSize: 20.0),
+            style: TextStyle(fontSize:size.getTextFont()),
           ),
           content: Container(
-            height: w * 0.9,
-            width: w * 0.9,
+            height: size.getWidth(),
+            width: size.getWidth(),
             child: Column(
               children: [
                 Expanded(
@@ -229,10 +233,10 @@ class _CanvasState extends State<Canvas> {
                 Navigator.of(context, rootNavigator: true).pop('dialog');
                 setState(() {});
               },
-              child: Text("Cancel"),
-              color: Colors.grey,
+              child: Text("Cancel", style: TextStyle(fontSize: size.getTextFont()),),
+              color: Colors.red,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(10.0),
               ),
             ),
             FlatButton(
@@ -250,10 +254,10 @@ class _CanvasState extends State<Canvas> {
                 );
                 setState(() {});
               },
-              child: Text("Confirm"),
+              child: Text("Confirm", style: TextStyle(fontSize: size.getTextFont()),),
               color: Colors.green,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(10.0),
               ),
             ),
           ],
@@ -269,11 +273,11 @@ class _CanvasState extends State<Canvas> {
           ),
           title: Text(
             "Confirm Drawing",
-            style: TextStyle(fontSize: 24.0),
+            style: TextStyle(fontSize: size.getTextFont()),
           ),
           content: Container(
-            width: w * 0.9,
-            height: w * 0.9,
+            width: size.getWidth(),
+            height: size.getWidth(),
             decoration: BoxDecoration(
                 image: DecorationImage(
                   image: FileImage(picture),
@@ -293,7 +297,7 @@ class _CanvasState extends State<Canvas> {
         children: [
           Text(
             "Gender",
-            style: TextStyle(fontSize: h * 0.03, color: Colors.black),
+            style: TextStyle(fontSize: size.getTitleFont(), color: Colors.black),
           ),
           Row(
             children: [
@@ -307,7 +311,8 @@ class _CanvasState extends State<Canvas> {
                   });
                 },
               ),
-              const Text('Male'),
+              Text('Male',
+                style: TextStyle(fontSize: size.getTextFont())),
               Radio(
                 value: 'Female',
                 groupValue: gender,
@@ -318,7 +323,8 @@ class _CanvasState extends State<Canvas> {
                   });
                 },
               ),
-              const Text('Female'),
+              Text('Female',
+                  style: TextStyle(fontSize: size.getTextFont())),
             ],
           ),
         ],
@@ -332,7 +338,7 @@ class _CanvasState extends State<Canvas> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text("Canvas", style: TextStyle(fontSize: h * 0.03)),
+          Text("Canvas", style: TextStyle(fontSize: size.getTitleFont())),
           Row(
             children: <Widget>[
               // Text("select"),
@@ -399,18 +405,65 @@ class _CanvasState extends State<Canvas> {
 
   Container buildSlider() {
     return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Slider(
-            value: _controller.thickness,
-            onChanged: (double value) => setState(() {
-              _controller.thickness = value;
-            }),
-            min: 1.0,
-            max: 20.0,
-            activeColor: Colors.black12,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                icon: Icon(Icons.create),
+                tooltip: ' draw',
+                onPressed: () {
+                  setState(
+                        () {
+                      _controller.eraseMode = false;
+                    },
+                  );
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.remove_circle),
+                tooltip:
+                (_controller.eraseMode ? 'Disable' : 'Disable') + ' eraser',
+                onPressed: () {
+                  setState(
+                        () {
+                      _controller.eraseMode = true;
+                    },
+                  );
+                },
+              ),
+              IconButton(
+                icon: Icon(
+                  Icons.undo,
+                ),
+                tooltip: 'Undo',
+                onPressed: () {
+                  if (_controller.isEmpty) {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) => Text('Nothing to undo'));
+                  } else {
+                    _controller.undo();
+                  }
+                },
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Slider(
+                value: _controller.thickness,
+                onChanged: (double value) => setState(() {
+                  _controller.thickness = value;
+                }),
+                min: 1.0,
+                max: 20.0,
+                activeColor: Colors.black12,
+              ),
+            ],
           ),
         ],
       ),
@@ -420,82 +473,48 @@ class _CanvasState extends State<Canvas> {
   BottomAppBar buildBottomAppBar(double w, BuildContext context) {
     return BottomAppBar(
       // color: Colors.white,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          SizedBox(
-            width: w * 0.2,
-            child: FlatButton(
-                onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => MainMenu()),
-                  // );
-                  Navigator.pop(context);
-                },
-                child: Text("back"),
-                color: Colors.grey,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0))),
-          ),
-          IconButton(
-            icon: Icon(Icons.create),
-            tooltip: ' draw',
-            onPressed: () {
-              setState(
-                () {
-                  _controller.eraseMode = false;
-                },
-              );
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.remove_circle),
-            tooltip:
-                (_controller.eraseMode ? 'Disable' : 'Disable') + ' eraser',
-            onPressed: () {
-              setState(
-                () {
-                  _controller.eraseMode = true;
-                },
-              );
-            },
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.undo,
+      child: Padding(
+        padding: EdgeInsets.all(size.getPad()),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            SizedBox(
+              width: w * 0.2,
+              child: FlatButton(
+                  onPressed: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => MainMenu()),
+                    // );
+                    Navigator.pop(context);
+                  },
+                  child: Text("back", style: TextStyle(fontSize: size.getTextFont()),),
+                  color: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
             ),
-            tooltip: 'Undo',
-            onPressed: () {
-              if (_controller.isEmpty) {
-                showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext context) => Text('Nothing to undo'));
-              } else {
-                _controller.undo();
-              }
-            },
-          ),
-          SizedBox(
-            width: w * 0.2,
-            child: FlatButton(
-                onPressed: () {
-                  if (imageFile != null) {
-                    showImage(imageFile, context, w);
-                  } else {
-                    print(" >>> "+_controllerBackup.toString());
-                    _controllerBackup = _controller;
-                    print(" >>> "+_controllerBackup.toString());
-                    showDrawing(_controller.finish(), context, w);
-                  }
-                  setState(() {});
-                },
-                child: Text("next"),
-                color: Colors.grey,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0))),
-          ),
-        ],
+
+            SizedBox(
+              width: w * 0.2,
+              child: FlatButton(
+                  onPressed: () {
+                    if (imageFile != null) {
+                      showImage(imageFile, context, w);
+                    } else {
+                      print(" >>> "+_controllerBackup.toString());
+                      _controllerBackup = _controller;
+                      print(" >>> "+_controllerBackup.toString());
+                      showDrawing(_controller.finish(), context, w);
+                    }
+                    setState(() {});
+                  },
+                  child: Text("next", style: TextStyle(fontSize: size.getTextFont()),),
+                  color: Colors.blue,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
+            ),
+          ],
+        ),
       ),
     );
   }

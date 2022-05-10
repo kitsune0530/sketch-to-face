@@ -5,6 +5,7 @@ import 'dart:developer' as dev;
 
 import 'package:camera/camera.dart';
 import 'package:facegen/page/main_mobile.dart';
+import 'package:facegen/sizing.dart';
 import 'package:facegen/web/main_web.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -93,6 +94,8 @@ List<String> desType = [
   "Eyebrows",
   "Beard"
 ];
+
+ContextSize size = new ContextSize();
 Future<void> main() async {
   print(">>Starting");
   // try {
