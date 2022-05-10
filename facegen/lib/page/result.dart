@@ -404,7 +404,7 @@ class _GeneratedState extends State<Generated> {
                         barrierColor: Colors.black26,
                         context: context,
                         builder: (context) {
-                          return const CustomAlertDialog(
+                          return CustomAlertDialog(
                             title: "Warning!",
                             description: "The created image will disappear\n" +
                                 "Want to return to the main page?",

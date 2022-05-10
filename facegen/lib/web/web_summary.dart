@@ -589,10 +589,14 @@ class _WebSummaryState extends State<WebSummary> {
                   barrierColor: Colors.black26,
                   context: context,
                   builder: (context) {
-                    return const CustomAlertDialog(
-                      title: "Warning!",
-                      description: "The created image will disappear\n" +
-                          "Make sure to save the image before return.",
+                    return SizedBox(
+                      width: this.halfWidth/2,
+                      height: this.halfWidth/2,
+                      child: CustomAlertDialog(
+                        title: "Warning!",
+                        description: "The created image will disappear\n" +
+                            "Make sure to save the image before return.",width: this.halfWidth/2, height: this.halfWidth/2, textFont: this.textFont, titleFont: this.titleFont,
+                      ),
                     );
                   },
                 ),

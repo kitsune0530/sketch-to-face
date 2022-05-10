@@ -1,14 +1,12 @@
 // ignore_for_file: avoid_print
 
 import 'dart:developer' as dev;
+
+
 import 'package:camera/camera.dart';
-import 'package:facegen/page/result.dart';
+import 'package:facegen/page/main_mobile.dart';
 import 'package:facegen/web/main_web.dart';
 import 'package:flutter/material.dart';
-import 'package:facegen/page/main_mobile.dart';
-import 'package:facegen/page/dropdown.dart';
-import 'package:facegen/page/canvas.dart';
-import 'dart:math';
 import 'package:flutter/services.dart';
 
 
