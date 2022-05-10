@@ -10,7 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:image_picker_web/image_picker_web.dart';
+// import 'package:image_picker_web/image_picker_web.dart';
 import 'package:painter/painter.dart';
 import 'package:facegen/helper/sizehelper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -84,10 +84,10 @@ class _MainWebsiteState extends State<MainWebsite> {
   String htmlSelectFileLog = "";
 
   _startFilePicker() async {
-    Uint8List bytesFromPicker = await ImagePickerWeb.getImageAsBytes();
+    // Uint8List bytesFromPicker = await ImagePickerWeb.getImageAsBytes();
     setState(() {
-      this.imageFile = Image.memory(bytesFromPicker);
-      this.imageUint8 = bytesFromPicker;
+      // this.imageFile = Image.memory(bytesFromPicker);
+      // this.imageUint8 = bytesFromPicker;
     });
     dev.log("Save Image into \"imageFile\"");
   }

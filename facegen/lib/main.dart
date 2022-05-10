@@ -110,28 +110,28 @@ Future<void> main() async {
   if (kIsWeb) {
     dev.log("Website");
 
-    runApp(WebApp());
+    // runApp(WebApp());
   } else {
     dev.log("Mobile App");
     runApp(MobileApp());
   }
 }
 
-class WebApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
-
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData.light(),
-        home:  MainWebsite()
-    );
-  }
-}
+// class WebApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//
+//     SystemChrome.setPreferredOrientations([
+//       DeviceOrientation.portraitUp,
+//     ]);
+//
+//     return MaterialApp(
+//         title: 'Flutter Demo',
+//         theme: ThemeData.light(),
+//         home:  MainWebsite()
+//     );
+//   }
+// }
 
 
 class MobileApp extends StatelessWidget {
