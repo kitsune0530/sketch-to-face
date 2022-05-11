@@ -229,18 +229,18 @@ class _DropdownPageState extends State<DropdownPage> {
           ),
         ),
         // SizedBox(width: w * 0.1),
-        Expanded(
-          // width: size.getWidth()*0.7,
+        Container(
+          width: size.getWidth()*0.6,
           child: DropdownButton<String>(
             value: dropdownValue,
             style:  TextStyle(
-              fontSize: size.getTextFont(),
+              fontSize: size.getTextFont()*0.8,
               color: Colors.black,
             ),
             items: list.map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
-                child: Text(value, textAlign: TextAlign.right,),
+                child: Text(value),
               );
             }).toList(),
             hint: Text(

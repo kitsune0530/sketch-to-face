@@ -1,4 +1,5 @@
 import 'dart:convert';
+// import 'dart:html';
 import 'dart:typed_data';
 import 'dart:ui';
 
@@ -22,6 +23,7 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:gallery_saver/gallery_saver.dart';
@@ -104,6 +106,7 @@ class _GeneratedState extends State<Generated> {
       var request = http.MultipartRequest(
         'POST',
         // Uri.parse("http://192.168.245.3:8086/generate"),
+        // Uri.parse("http://52.148.83.67/generate"),
         Uri.parse("http://10.160.131.121:8086/generate"),
       );
       Map<String, String> headers = {"Content-type": "multipart/form-data"};
@@ -384,11 +387,12 @@ class _GeneratedState extends State<Generated> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 IconButton(
-                  icon: const Icon(Icons.save_alt_outlined),
+                  icon: const Icon(Icons.save_alt_outlined),iconSize: size.getTextFont(),
                   splashColor: Colors.black,
                   onPressed: () async {
-
+                    // android.permission.WRITE_EXTERNAL_STORAGE;
                     dev.log("Saving In Progress");
+
 
                     await uint8ToFile(generatedByte, "1").then((value) {
                       print(this.genFile.toString());
@@ -438,16 +442,17 @@ class _GeneratedState extends State<Generated> {
                 ),
 
                 IconButton(
+                  iconSize: size.getTextFont(),
                     onPressed: () =>
                         showDialog(
                           barrierColor: Colors.black26,
                           context: context,
                           builder: (context) {
-                            return Container(
-                              child: AlertDialog(
-                                title: Text("Image Saved." ,textAlign: TextAlign.center,style: TextStyle(fontSize: size.getTextFont()),),
-                              ),
-                            );
+                            // return Container(
+                            //   child: AlertDialog(
+                            //     title: Text("Image Saved." ,textAlign: TextAlign.center,style: TextStyle(fontSize: size.getTextFont()),),
+                            //   ),
+                            // );
                             return
                               CustomAlertDialog(
                               title: "Warning!",
@@ -456,7 +461,7 @@ class _GeneratedState extends State<Generated> {
                             );
                           },
                         ),
-                    icon: Icon(Icons.home_sharp))
+                    icon: Icon(Icons.home_sharp, ))
               ],
             ),
           )

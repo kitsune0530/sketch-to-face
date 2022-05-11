@@ -339,31 +339,38 @@ class _CanvasState extends State<Canvas> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text("Canvas", style: TextStyle(fontSize: size.getTitleFont())),
-          Row(
-            children: <Widget>[
-              // Text("select"),
-              IconButton(
-                icon: Icon(Icons.photo),
-                onPressed: () {
-                  choosenGallery();
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.camera),
-                onPressed: () {
-                  choosenCamera();
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.refresh),
-                tooltip: 'Clear',
-                onPressed: () {
-                  newPainterController();
-                  imageFile = null;
-                  setState(() {});
-                },
-              ),
-            ],
+          SizedBox(
+            width:size.getWidth()*0.5,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                // Text("select"),
+                IconButton(
+                  iconSize: size.getTextFont(),
+                  icon: Icon(Icons.photo),
+                  onPressed: () {
+                    choosenGallery();
+                  },
+                ),
+                IconButton(
+                  iconSize: size.getTextFont(),
+                  icon: Icon(Icons.camera),
+                  onPressed: () {
+                    choosenCamera();
+                  },
+                ),
+                IconButton(
+                  iconSize: size.getTextFont(),
+                  icon: Icon(Icons.refresh),
+                  tooltip: 'Clear',
+                  onPressed: () {
+                    newPainterController();
+                    imageFile = null;
+                    setState(() {});
+                  },
+                ),
+              ],
+            ),
           )
         ],
       ),
@@ -408,9 +415,10 @@ class _CanvasState extends State<Canvas> {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               IconButton(
+                iconSize: size.getTextFont(),
                 icon: Icon(Icons.create),
                 tooltip: ' draw',
                 onPressed: () {
@@ -422,6 +430,7 @@ class _CanvasState extends State<Canvas> {
                 },
               ),
               IconButton(
+                iconSize: size.getTextFont(),
                 icon: Icon(Icons.remove_circle),
                 tooltip:
                 (_controller.eraseMode ? 'Disable' : 'Disable') + ' eraser',
@@ -434,6 +443,7 @@ class _CanvasState extends State<Canvas> {
                 },
               ),
               IconButton(
+                iconSize: size.getTextFont(),
                 icon: Icon(
                   Icons.undo,
                 ),
@@ -454,14 +464,25 @@ class _CanvasState extends State<Canvas> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Slider(
-                value: _controller.thickness,
-                onChanged: (double value) => setState(() {
-                  _controller.thickness = value;
-                }),
-                min: 1.0,
-                max: 20.0,
-                activeColor: Colors.black12,
+              Container(
+                width: size.getHalfWidth(),
+                child: SliderTheme(
+                  data: SliderThemeData(
+                    trackHeight: size.getPad(),
+
+                  ),
+                  child: Slider(
+
+                    value: _controller.thickness,
+                    onChanged: (double value) => setState(() {
+                      _controller.thickness = value;
+                    }),
+                    min: 1.0,
+                    max: 20.0,
+                    divisions: 5,
+                    activeColor: Colors.black12,
+                  ),
+                ),
               ),
             ],
           ),
