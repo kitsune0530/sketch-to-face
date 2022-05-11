@@ -22,9 +22,9 @@ class DropdownPage extends StatefulWidget {
 
   DropdownPage({Key key, this.image}) : super(key: key);
 
-  void initState() {
-    image=null;
-  }
+  // void initState() {
+  //   image=null;
+  // }
 
   @override
   _DropdownPageState createState() => _DropdownPageState(image);
@@ -52,6 +52,7 @@ class _DropdownPageState extends State<DropdownPage> {
 
 
   _DropdownPageState(this.image) {
+    dev.log("[DEBUG] >>> Dropdown Image recieve:" +this.image.toString());
     setChosen();
   }
 

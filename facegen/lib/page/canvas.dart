@@ -1,5 +1,5 @@
 // ignore_for_file: prefer_const_constructors
-
+import 'dart:developer' as dev;
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
@@ -57,6 +57,7 @@ class _CanvasState extends State<Canvas> {
     _controller = new PainterController();
     _controller.thickness = 5.0;
     _controller.backgroundColor = Colors.white;
+    _controllerBackup = null;
   }
 
   @override
@@ -108,11 +109,14 @@ class _CanvasState extends State<Canvas> {
   }
 
   Future<String> uint8ToFile(Uint8List imageInUnit8List) async {
+    String stamp = DateTime.now().millisecondsSinceEpoch.toString();
+
     final tempDir = await getTemporaryDirectory();
-    File file = await File('${tempDir.path}/drawing.png').create();
-    print('${tempDir.path}/drawing.png');
+    String path = '${tempDir.path}/drawing${stamp}.png';
+    File file = await File(path).create();
+    print(path);
     file.writeAsBytesSync(imageInUnit8List);
-    return ('${tempDir.path}/drawing.png');
+    return path;
   }
 
   void showDrawing(PictureDetails picture, BuildContext dialogContext, w) {
@@ -194,7 +198,7 @@ class _CanvasState extends State<Canvas> {
 
                             uint8ToFile(snapshot.data).then((value) {
                               out = value;
-                              print("Out: " + out);
+                              dev.log("[DEBUG] >>> Image Out: " + out);
                               image = File(out);
                             });
 
@@ -365,7 +369,7 @@ class _CanvasState extends State<Canvas> {
                   tooltip: 'Clear',
                   onPressed: () {
                     newPainterController();
-                    imageFile = null;
+                    this.imageFile = null;
                     setState(() {});
                   },
                 ),
@@ -521,6 +525,7 @@ class _CanvasState extends State<Canvas> {
                   onPressed: () {
                     if (imageFile != null) {
                       showImage(imageFile, context, w);
+                      dev.log("Select Image");
                     } else {
                       print(" >>> "+_controllerBackup.toString());
                       _controllerBackup = _controller;

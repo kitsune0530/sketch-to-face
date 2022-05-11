@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:developer' as dev;
 import 'dart:typed_data';
 import 'package:facegen/page/dropdown.dart';
 import 'package:facegen/page/result.dart';
@@ -52,9 +53,11 @@ class _SummaryPageState extends State<SummaryPage> {
   _SummaryPageState(File image) {
     print(" >>> Create Summary");
     this.image = null;
+    dev.log("[DEBUG] >>> Image:"+ this.image.toString());
     print(" >>> Set Image =  null");
     this.image = image;
     print(" >>> Set New Image");
+    dev.log("[DEBUG] >>> Set New Image:"+ this.image.path);
 
     setChoosed();
 
@@ -151,7 +154,7 @@ class _SummaryPageState extends State<SummaryPage> {
                       "${PrintDes("hair, ", _choosenHair)}"
                       "${PrintDes("eyebrows, ", _choosenEyebrows)}"
                       "${PrintDes("beard", _choosenBeard)}",
-                  style: TextStyle(fontSize: h * 0.05),
+                  style: TextStyle(fontSize: size.getTextFont()),
                 ),
               ),
             )
