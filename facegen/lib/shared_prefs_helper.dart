@@ -13,8 +13,8 @@ class SharedPrefsHelper{
   }
 
   static void saveValue(String name, String value)async{
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(name, value) ?? '';
+    final SharedPreferences? prefs = await SharedPreferences.getInstance();
+    prefs?.setString(name, value) ?? '';
   }
 
   static void resetValues() async{

@@ -12,6 +12,12 @@
 @import camera;
 #endif
 
+#if __has_include(<external_app_launcher/LaunchexternalappPlugin.h>)
+#import <external_app_launcher/LaunchexternalappPlugin.h>
+#else
+@import external_app_launcher;
+#endif
+
 #if __has_include(<file_picker/FilePickerPlugin.h>)
 #import <file_picker/FilePickerPlugin.h>
 #else
@@ -58,6 +64,7 @@
 
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
   [CameraPlugin registerWithRegistrar:[registry registrarForPlugin:@"CameraPlugin"]];
+  [LaunchexternalappPlugin registerWithRegistrar:[registry registrarForPlugin:@"LaunchexternalappPlugin"]];
   [FilePickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FilePickerPlugin"]];
   [GallerySaverPlugin registerWithRegistrar:[registry registrarForPlugin:@"GallerySaverPlugin"]];
   [GalleryViewPlugin registerWithRegistrar:[registry registrarForPlugin:@"GalleryViewPlugin"]];

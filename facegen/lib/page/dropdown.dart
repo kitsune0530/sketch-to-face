@@ -45,6 +45,8 @@ class _DropdownPageState extends State<DropdownPage> {
   String? gender;
   late File image;
 
+
+
   // Future<List<String>> chooseList;
   List<String>? chooseList;
 
@@ -171,6 +173,7 @@ class _DropdownPageState extends State<DropdownPage> {
                     // );
 
                     Navigator.pop(context);
+                    Navigator.pop(context);
                   },
                   child: Text("back", style: TextStyle(fontSize: size.getTextFont()),),
                   color: Colors.grey,
@@ -182,14 +185,14 @@ class _DropdownPageState extends State<DropdownPage> {
               child: FlatButton(
                   onPressed: () {
 
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => SummaryPage.setImage(
-                    //       image: image,
-                    //     ),
-                    //   ),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SummaryPage.setImage(
+                          image: image,
+                        ),
+                      ),
+                    );
                   },
                   child: Text("next", style: TextStyle(fontSize: size.getTextFont()),),
                   color: Colors.blue,

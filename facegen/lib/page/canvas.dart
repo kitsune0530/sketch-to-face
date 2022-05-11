@@ -35,12 +35,12 @@ class _CanvasState extends State<Canvas> {
     setState(() {});
   }
 
-  String gender = 'Male';
+  String? gender = 'Male';
   bool _finished = false;
 
-  late File imageFile;
-  late PainterController _controllerBackup;
-  late PainterController _controller;
+   File? imageFile;
+   PainterController? _controllerBackup;
+   PainterController? _controller;
 
   final picker = ImagePicker();
 
@@ -48,16 +48,18 @@ class _CanvasState extends State<Canvas> {
     if (image != null) {
       this.imageFile = image;
     } else {
-      this.imageFile!;
+      // this.imageFile!;
     }
 
     newPainterController();
   }
   void newPainterController() {
     _controller = new PainterController();
-    _controller.thickness = 5.0;
-    _controller.backgroundColor = Colors.white;
-    _controller = new PainterController();
+    _controllerBackup = new PainterController();
+    dev.log("[DEBUG] >>> Set New Painter");
+    _controller!.thickness = 5.0;
+    _controller!.backgroundColor = Colors.white;
+    // _controllerBackup = new PainterController();
     // _controllerBackup = null;
   }
 
@@ -70,7 +72,7 @@ class _CanvasState extends State<Canvas> {
   choosenGallery() async {
     final pickerFile = await picker.getImage(source: ImageSource.gallery);
     setState(() {
-      String path = pickerFile!.path!;
+      String path = pickerFile!.path;
       imageFile = File(path);
     });
   }
@@ -78,7 +80,7 @@ class _CanvasState extends State<Canvas> {
   choosenCamera() async {
     final pickerFile = await picker.getImage(source: ImageSource.camera);
     setState(() {
-      imageFile = File(pickerFile!.path!);
+      imageFile = File(pickerFile!.path);
     });
   }
   // ContextSize size = new ContextSize();
@@ -122,7 +124,7 @@ class _CanvasState extends State<Canvas> {
   }
 
   void showDrawing(PictureDetails picture, BuildContext dialogContext, w) {
-    late File image;
+    File? image;
     showDialog(
       context: context,
       builder: (context) {
@@ -153,7 +155,7 @@ class _CanvasState extends State<Canvas> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DropdownPage(image: image),
+                    builder: (context) => DropdownPage(image: image!),
                   ),
                 );
                 // Navigator.of(context, rootNavigator: true).pop(context);
@@ -255,7 +257,7 @@ class _CanvasState extends State<Canvas> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DropdownPage(image: imageFile),
+                    builder: (context) => DropdownPage(image: imageFile!),
                   ),
                 );
                 setState(() {});
@@ -395,7 +397,7 @@ class _CanvasState extends State<Canvas> {
                     height: w * 0.95,
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: FileImage(imageFile),
+                          image: FileImage(imageFile!),
                         ),
                         border: Border.all(width: 1)),
                   )
@@ -408,7 +410,7 @@ class _CanvasState extends State<Canvas> {
                     width: w * 0.95,
                     height: w * 0.95,
                     child: AspectRatio(
-                        aspectRatio: 1 / 1, child: Painter(_controller)),
+                        aspectRatio: 1 / 1, child: Painter(_controller!)),
                   ),
           ),
         ],
@@ -430,7 +432,7 @@ class _CanvasState extends State<Canvas> {
                 onPressed: () {
                   setState(
                         () {
-                      _controller.eraseMode = false;
+                      _controller!.eraseMode = false;
                     },
                   );
                 },
@@ -439,11 +441,11 @@ class _CanvasState extends State<Canvas> {
                 iconSize: size.getTextFont(),
                 icon: Icon(Icons.remove_circle),
                 tooltip:
-                (_controller.eraseMode ? 'Disable' : 'Disable') + ' eraser',
+                (_controller!.eraseMode ? 'Disable' : 'Disable') + ' eraser',
                 onPressed: () {
                   setState(
                         () {
-                      _controller.eraseMode = true;
+                      _controller!.eraseMode = true;
                     },
                   );
                 },
@@ -455,12 +457,12 @@ class _CanvasState extends State<Canvas> {
                 ),
                 tooltip: 'Undo',
                 onPressed: () {
-                  if (_controller.isEmpty) {
+                  if (_controller!.isEmpty) {
                     showModalBottomSheet(
                         context: context,
                         builder: (BuildContext context) => Text('Nothing to undo'));
                   } else {
-                    _controller.undo();
+                    _controller!.undo();
                   }
                 },
               ),
@@ -479,9 +481,9 @@ class _CanvasState extends State<Canvas> {
                   ),
                   child: Slider(
 
-                    value: _controller.thickness,
+                    value: _controller!.thickness,
                     onChanged: (double value) => setState(() {
-                      _controller.thickness = value;
+                      _controller!.thickness = value;
                     }),
                     min: 1.0,
                     max: 20.0,
@@ -526,13 +528,13 @@ class _CanvasState extends State<Canvas> {
               child: FlatButton(
                   onPressed: () {
                     if (imageFile != null) {
-                      showImage(imageFile, context, w);
+                      showImage(imageFile!, context, w);
                       dev.log("Select Image");
                     } else {
                       print(" >>> "+_controllerBackup.toString());
                       _controllerBackup = _controller;
                       print(" >>> "+_controllerBackup.toString());
-                      showDrawing(_controller.finish(), context, w);
+                      showDrawing(_controller!.finish(), context, w);
                     }
                     setState(() {});
                   },

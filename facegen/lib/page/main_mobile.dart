@@ -1,5 +1,5 @@
 // ignore_for_file: deprecated_member_use, prefer_const_constructors
-
+import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:facegen/page/canvas.dart';
 import 'package:facegen/page/view_gallery.dart';
 import 'package:facegen/shared_prefs_helper.dart';
@@ -7,6 +7,7 @@ import 'package:facegen/sizing.dart';
 import 'package:flutter/material.dart';
 import 'package:facegen/helper/sizehelper.dart';
 import 'package:flutter/services.dart';
+// import 'package:intent/intent.dart';
 
 import 'dart:developer' as dev;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -105,12 +106,28 @@ class MainMenu extends StatelessWidget {
             color: Colors.grey,
             child:
                 Text("View Saved Images", style: TextStyle(fontSize: size.getTextFont())),
-            onPressed: () {
+            onPressed: () async {
               dev.log("Open Gallery");
+
               // Navigator.push(
               // context,
               // MaterialPageRoute(builder: (context) => OpenGallery()),
               // );
+
+              bool isInst = false;
+              dev.log(isInst.toString());
+              isInst = await LaunchApp.isAppInstalled(androidPackageName: "com.google.android.gallery3d",);
+              dev.log(isInst.toString());
+              isInst = await LaunchApp.isAppInstalled(androidPackageName: "com.google.android.apps.photos",);
+              dev.log(isInst.toString());
+              await LaunchApp.openApp(
+                  androidPackageName: "com.google.android.apps.photos",
+                  openStore: true,
+              );
+
+
+
+
             },
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0))),

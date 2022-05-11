@@ -5,18 +5,20 @@ INJECTED from D:\Github\sketch-to-face\facegen\android\app\src\main\AndroidManif
 INJECTED from D:\Github\sketch-to-face\facegen\android\app\src\main\AndroidManifest.xml:1:1-96:12
 INJECTED from D:\Github\sketch-to-face\facegen\android\app\src\main\AndroidManifest.xml:1:1-96:12
 MERGED from D:\Github\sketch-to-face\facegen\android\app\src\main\AndroidManifest.xml:1:1-96:12
-MERGED from [:file_picker] D:\Github\sketch-to-face\facegen\build\file_picker\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-17:12
-MERGED from [:gallery_view] D:\Github\sketch-to-face\facegen\build\gallery_view\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
-MERGED from [:sqflite] D:\Github\sketch-to-face\facegen\build\sqflite\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
-MERGED from [:image_picker_android] D:\Github\sketch-to-face\facegen\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-19:12
-MERGED from [:camera] D:\Github\sketch-to-face\facegen\build\camera\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-12:12
-MERGED from [:flutter_plugin_android_lifecycle] D:\Github\sketch-to-face\facegen\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
-MERGED from [:gallery_saver] D:\Github\sketch-to-face\facegen\build\gallery_saver\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
-MERGED from [:android_intent_plus] D:\Github\sketch-to-face\facegen\build\android_intent_plus\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
-MERGED from [:path_provider_android] D:\Github\sketch-to-face\facegen\build\path_provider_android\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:shared_preferences_android] D:\Github\sketch-to-face\facegen\build\shared_preferences_android\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:external_app_launcher] D:\Github\sketch-to-face\facegen\build\external_app_launcher\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:file_picker] D:\Github\sketch-to-face\facegen\build\file_picker\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-17:12
+MERGED from [:camera] D:\Github\sketch-to-face\facegen\build\camera\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-12:12
+MERGED from [:image_picker_android] D:\Github\sketch-to-face\facegen\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-19:12
+MERGED from [:flutter_plugin_android_lifecycle] D:\Github\sketch-to-face\facegen\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:sqflite] D:\Github\sketch-to-face\facegen\build\sqflite\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:gallery_view] D:\Github\sketch-to-face\facegen\build\gallery_view\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:path_provider_android] D:\Github\sketch-to-face\facegen\build\path_provider_android\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:android_intent_plus] D:\Github\sketch-to-face\facegen\build\android_intent_plus\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:gallery_saver] D:\Github\sketch-to-face\facegen\build\gallery_saver\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.window:window-java:1.0.0-beta04] C:\Users\kitsu\.gradle\caches\transforms-3\ff4c604c3e8c6c5d552a353a028a4391\transformed\jetified-window-java-1.0.0-beta04\AndroidManifest.xml:17:1-23:12
 MERGED from [androidx.window:window:1.0.0-beta04] C:\Users\kitsu\.gradle\caches\transforms-3\960574679f9e09b93cbc2e2fda5d5772\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.exifinterface:exifinterface:1.3.2] C:\Users\kitsu\.gradle\caches\transforms-3\49c4c9ce56ae6c99a7c3bd69b843edde\transformed\exifinterface-1.3.2\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.core:core-ktx:1.5.0] C:\Users\kitsu\.gradle\caches\transforms-3\922058f27249b81d9ae022938e946aea\transformed\jetified-core-ktx-1.5.0\AndroidManifest.xml:2:1-9:12
 MERGED from [androidx.legacy:legacy-support-v4:1.0.0] C:\Users\kitsu\.gradle\caches\transforms-3\8bc68e9b58a95fd2e9ad5f1bbdf0eb7b\transformed\legacy-support-v4-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.fragment:fragment:1.1.0] C:\Users\kitsu\.gradle\caches\transforms-3\0560a71d22848671a7988cbb13059e8f\transformed\fragment-1.1.0\AndroidManifest.xml:17:1-24:12
@@ -33,7 +35,6 @@ MERGED from [androidx.customview:customview:1.0.0] C:\Users\kitsu\.gradle\caches
 MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] C:\Users\kitsu\.gradle\caches\transforms-3\40ddcfa700735c4d5c8f7b4ed42d34a9\transformed\swiperefreshlayout-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\kitsu\.gradle\caches\transforms-3\4d4fa60840d1c8401788e5051938828e\transformed\asynclayoutinflater-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.core:core:1.6.0] C:\Users\kitsu\.gradle\caches\transforms-3\8a157348e69e31d41a38d1650f760d2f\transformed\core-1.6.0\AndroidManifest.xml:17:1-26:12
-MERGED from [androidx.exifinterface:exifinterface:1.3.2] C:\Users\kitsu\.gradle\caches\transforms-3\49c4c9ce56ae6c99a7c3bd69b843edde\transformed\exifinterface-1.3.2\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] C:\Users\kitsu\.gradle\caches\transforms-3\0a98b35da87da1a5c23897610b0ecf95\transformed\lifecycle-runtime-2.2.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.savedstate:savedstate:1.0.0] C:\Users\kitsu\.gradle\caches\transforms-3\2f6ba55d43aa5e0779a23deae5865c2f\transformed\jetified-savedstate-1.0.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\kitsu\.gradle\caches\transforms-3\4da7a011f27a4c23b51c2a2279fe7a6f\transformed\lifecycle-livedata-2.0.0\AndroidManifest.xml:17:1-22:12
@@ -191,30 +192,34 @@ uses-sdk
 INJECTED from D:\Github\sketch-to-face\facegen\android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\Github\sketch-to-face\facegen\android\app\src\main\AndroidManifest.xml
 INJECTED from D:\Github\sketch-to-face\facegen\android\app\src\main\AndroidManifest.xml
-MERGED from [:file_picker] D:\Github\sketch-to-face\facegen\build\file_picker\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:file_picker] D:\Github\sketch-to-face\facegen\build\file_picker\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:gallery_view] D:\Github\sketch-to-face\facegen\build\gallery_view\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:gallery_view] D:\Github\sketch-to-face\facegen\build\gallery_view\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:sqflite] D:\Github\sketch-to-face\facegen\build\sqflite\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:sqflite] D:\Github\sketch-to-face\facegen\build\sqflite\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:image_picker_android] D:\Github\sketch-to-face\facegen\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:image_picker_android] D:\Github\sketch-to-face\facegen\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:camera] D:\Github\sketch-to-face\facegen\build\camera\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
-MERGED from [:camera] D:\Github\sketch-to-face\facegen\build\camera\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
-MERGED from [:flutter_plugin_android_lifecycle] D:\Github\sketch-to-face\facegen\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:flutter_plugin_android_lifecycle] D:\Github\sketch-to-face\facegen\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:gallery_saver] D:\Github\sketch-to-face\facegen\build\gallery_saver\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:gallery_saver] D:\Github\sketch-to-face\facegen\build\gallery_saver\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:android_intent_plus] D:\Github\sketch-to-face\facegen\build\android_intent_plus\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:android_intent_plus] D:\Github\sketch-to-face\facegen\build\android_intent_plus\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:path_provider_android] D:\Github\sketch-to-face\facegen\build\path_provider_android\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:path_provider_android] D:\Github\sketch-to-face\facegen\build\path_provider_android\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:shared_preferences_android] D:\Github\sketch-to-face\facegen\build\shared_preferences_android\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:shared_preferences_android] D:\Github\sketch-to-face\facegen\build\shared_preferences_android\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:external_app_launcher] D:\Github\sketch-to-face\facegen\build\external_app_launcher\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:external_app_launcher] D:\Github\sketch-to-face\facegen\build\external_app_launcher\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:file_picker] D:\Github\sketch-to-face\facegen\build\file_picker\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:file_picker] D:\Github\sketch-to-face\facegen\build\file_picker\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:camera] D:\Github\sketch-to-face\facegen\build\camera\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:camera] D:\Github\sketch-to-face\facegen\build\camera\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:image_picker_android] D:\Github\sketch-to-face\facegen\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:image_picker_android] D:\Github\sketch-to-face\facegen\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:flutter_plugin_android_lifecycle] D:\Github\sketch-to-face\facegen\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:flutter_plugin_android_lifecycle] D:\Github\sketch-to-face\facegen\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:sqflite] D:\Github\sketch-to-face\facegen\build\sqflite\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:sqflite] D:\Github\sketch-to-face\facegen\build\sqflite\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:gallery_view] D:\Github\sketch-to-face\facegen\build\gallery_view\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:gallery_view] D:\Github\sketch-to-face\facegen\build\gallery_view\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:path_provider_android] D:\Github\sketch-to-face\facegen\build\path_provider_android\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:path_provider_android] D:\Github\sketch-to-face\facegen\build\path_provider_android\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:android_intent_plus] D:\Github\sketch-to-face\facegen\build\android_intent_plus\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:android_intent_plus] D:\Github\sketch-to-face\facegen\build\android_intent_plus\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:gallery_saver] D:\Github\sketch-to-face\facegen\build\gallery_saver\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:gallery_saver] D:\Github\sketch-to-face\facegen\build\gallery_saver\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [androidx.window:window-java:1.0.0-beta04] C:\Users\kitsu\.gradle\caches\transforms-3\ff4c604c3e8c6c5d552a353a028a4391\transformed\jetified-window-java-1.0.0-beta04\AndroidManifest.xml:19:5-21:41
 MERGED from [androidx.window:window-java:1.0.0-beta04] C:\Users\kitsu\.gradle\caches\transforms-3\ff4c604c3e8c6c5d552a353a028a4391\transformed\jetified-window-java-1.0.0-beta04\AndroidManifest.xml:19:5-21:41
 MERGED from [androidx.window:window:1.0.0-beta04] C:\Users\kitsu\.gradle\caches\transforms-3\960574679f9e09b93cbc2e2fda5d5772\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.window:window:1.0.0-beta04] C:\Users\kitsu\.gradle\caches\transforms-3\960574679f9e09b93cbc2e2fda5d5772\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.2] C:\Users\kitsu\.gradle\caches\transforms-3\49c4c9ce56ae6c99a7c3bd69b843edde\transformed\exifinterface-1.3.2\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.2] C:\Users\kitsu\.gradle\caches\transforms-3\49c4c9ce56ae6c99a7c3bd69b843edde\transformed\exifinterface-1.3.2\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.core:core-ktx:1.5.0] C:\Users\kitsu\.gradle\caches\transforms-3\922058f27249b81d9ae022938e946aea\transformed\jetified-core-ktx-1.5.0\AndroidManifest.xml:5:5-7:41
 MERGED from [androidx.core:core-ktx:1.5.0] C:\Users\kitsu\.gradle\caches\transforms-3\922058f27249b81d9ae022938e946aea\transformed\jetified-core-ktx-1.5.0\AndroidManifest.xml:5:5-7:41
 MERGED from [androidx.legacy:legacy-support-v4:1.0.0] C:\Users\kitsu\.gradle\caches\transforms-3\8bc68e9b58a95fd2e9ad5f1bbdf0eb7b\transformed\legacy-support-v4-1.0.0\AndroidManifest.xml:20:5-44
@@ -247,8 +252,6 @@ MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\ki
 MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\kitsu\.gradle\caches\transforms-3\4d4fa60840d1c8401788e5051938828e\transformed\asynclayoutinflater-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.core:core:1.6.0] C:\Users\kitsu\.gradle\caches\transforms-3\8a157348e69e31d41a38d1650f760d2f\transformed\core-1.6.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.core:core:1.6.0] C:\Users\kitsu\.gradle\caches\transforms-3\8a157348e69e31d41a38d1650f760d2f\transformed\core-1.6.0\AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.exifinterface:exifinterface:1.3.2] C:\Users\kitsu\.gradle\caches\transforms-3\49c4c9ce56ae6c99a7c3bd69b843edde\transformed\exifinterface-1.3.2\AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.exifinterface:exifinterface:1.3.2] C:\Users\kitsu\.gradle\caches\transforms-3\49c4c9ce56ae6c99a7c3bd69b843edde\transformed\exifinterface-1.3.2\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] C:\Users\kitsu\.gradle\caches\transforms-3\0a98b35da87da1a5c23897610b0ecf95\transformed\lifecycle-runtime-2.2.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] C:\Users\kitsu\.gradle\caches\transforms-3\0a98b35da87da1a5c23897610b0ecf95\transformed\lifecycle-runtime-2.2.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.savedstate:savedstate:1.0.0] C:\Users\kitsu\.gradle\caches\transforms-3\2f6ba55d43aa5e0779a23deae5865c2f\transformed\jetified-savedstate-1.0.0\AndroidManifest.xml:20:5-22:41
@@ -299,6 +302,14 @@ data
 ADDED from [:file_picker] D:\Github\sketch-to-face\facegen\build\file_picker\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-44
 	android:mimeType
 		ADDED from [:file_picker] D:\Github\sketch-to-face\facegen\build\file_picker\intermediates\merged_manifest\debug\AndroidManifest.xml:13:19-41
+uses-permission#android.permission.CAMERA
+ADDED from [:camera] D:\Github\sketch-to-face\facegen\build\camera\intermediates\merged_manifest\debug\AndroidManifest.xml:9:5-65
+	android:name
+		ADDED from [:camera] D:\Github\sketch-to-face\facegen\build\camera\intermediates\merged_manifest\debug\AndroidManifest.xml:9:22-62
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from [:camera] D:\Github\sketch-to-face\facegen\build\camera\intermediates\merged_manifest\debug\AndroidManifest.xml:10:5-71
+	android:name
+		ADDED from [:camera] D:\Github\sketch-to-face\facegen\build\camera\intermediates\merged_manifest\debug\AndroidManifest.xml:10:22-68
 provider#io.flutter.plugins.imagepicker.ImagePickerFileProvider
 ADDED from [:image_picker_android] D:\Github\sketch-to-face\facegen\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:8:9-16:20
 	android:grantUriPermissions
@@ -315,14 +326,6 @@ ADDED from [:image_picker_android] D:\Github\sketch-to-face\facegen\build\image_
 		ADDED from [:image_picker_android] D:\Github\sketch-to-face\facegen\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:15:17-72
 	android:name
 		ADDED from [:image_picker_android] D:\Github\sketch-to-face\facegen\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:14:17-67
-uses-permission#android.permission.CAMERA
-ADDED from [:camera] D:\Github\sketch-to-face\facegen\build\camera\intermediates\merged_manifest\debug\AndroidManifest.xml:9:5-65
-	android:name
-		ADDED from [:camera] D:\Github\sketch-to-face\facegen\build\camera\intermediates\merged_manifest\debug\AndroidManifest.xml:9:22-62
-uses-permission#android.permission.RECORD_AUDIO
-ADDED from [:camera] D:\Github\sketch-to-face\facegen\build\camera\intermediates\merged_manifest\debug\AndroidManifest.xml:10:5-71
-	android:name
-		ADDED from [:camera] D:\Github\sketch-to-face\facegen\build\camera\intermediates\merged_manifest\debug\AndroidManifest.xml:10:22-68
 uses-library#androidx.window.extensions
 ADDED from [androidx.window:window:1.0.0-beta04] C:\Users\kitsu\.gradle\caches\transforms-3\960574679f9e09b93cbc2e2fda5d5772\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:25:9-27:40
 	android:required
