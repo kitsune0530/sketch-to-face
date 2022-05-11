@@ -1,15 +1,13 @@
 import 'package:facegen/page/main_mobile.dart';
-import 'package:facegen/web/main_web.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../main.dart';
 import 'sizehelper.dart';
-import 'package:facegen/sizing.dart';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 class CustomAlertDialog extends StatefulWidget {
 
-  CustomAlertDialog({Key key,this.title,this.description}) : super(key: key);
+  CustomAlertDialog({Key? key,required this.title, required this.description}) : super(key: key);
   String title = "", description  ="";
 
   @override
@@ -20,7 +18,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
 
 
   // ContextSize size = new ContextSize();
-  double width , height, titleFont, textFont;
+  double? width , height, titleFont, textFont;
 
   _CustomAlertDialogState(){
     this.width = size.getWidth();
@@ -43,7 +41,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
       ),
       child: Container(
         width: width,
-        height: height/2,
+        height: height!/2,
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(
@@ -80,16 +78,16 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: width * 0.1,
+                height: width! * 0.1,
                 child: InkWell(
                   highlightColor: Colors.grey[200],
                   onTap: () {
 
                     if(kIsWeb){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => MainWebsite()),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => MainWebsite()),
+                      // );
                     }else{
                       Navigator.push(
                         context,
@@ -114,9 +112,9 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: width * 0.1,
+                height: width! * 0.1,
                 child: InkWell(
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(15.0),
                     bottomRight: Radius.circular(15.0),
                   ),

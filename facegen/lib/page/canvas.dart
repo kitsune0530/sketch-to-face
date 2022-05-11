@@ -9,7 +9,7 @@ import 'package:facegen/sizing.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_draw/flutter_draw.dart';
+// import 'package:flutter_draw/flutter_draw.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:painter/painter.dart';
 import 'package:facegen/helper/sizehelper.dart';
@@ -22,8 +22,8 @@ import 'package:path_provider/path_provider.dart';
 import '../main.dart';
 
 class Canvas extends StatefulWidget {
-  File image;
-  Canvas({Key key, this.image}) : super(key: key);
+  File? image;
+  Canvas({Key? key, this.image}) : super(key: key);
 
   @override
   _CanvasState createState() => _CanvasState(image);
@@ -37,18 +37,18 @@ class _CanvasState extends State<Canvas> {
 
   String gender = 'Male';
   bool _finished = false;
-  File imageFile;
 
-  PainterController _controllerBackup;
+  late File imageFile;
+  late PainterController _controllerBackup;
+  late PainterController _controller;
 
   final picker = ImagePicker();
-  PainterController _controller;
 
-  _CanvasState(File image) {
+  _CanvasState(File? image) {
     if (image != null) {
       this.imageFile = image;
     } else {
-      this.imageFile = null;
+      this.imageFile!;
     }
 
     newPainterController();
@@ -57,7 +57,8 @@ class _CanvasState extends State<Canvas> {
     _controller = new PainterController();
     _controller.thickness = 5.0;
     _controller.backgroundColor = Colors.white;
-    _controllerBackup = null;
+    _controller = new PainterController();
+    // _controllerBackup = null;
   }
 
   @override
@@ -69,14 +70,15 @@ class _CanvasState extends State<Canvas> {
   choosenGallery() async {
     final pickerFile = await picker.getImage(source: ImageSource.gallery);
     setState(() {
-      imageFile = File(pickerFile.path);
+      String path = pickerFile!.path!;
+      imageFile = File(path);
     });
   }
 
   choosenCamera() async {
     final pickerFile = await picker.getImage(source: ImageSource.camera);
     setState(() {
-      imageFile = File(pickerFile.path);
+      imageFile = File(pickerFile!.path!);
     });
   }
   // ContextSize size = new ContextSize();
@@ -108,19 +110,19 @@ class _CanvasState extends State<Canvas> {
     );
   }
 
-  Future<String> uint8ToFile(Uint8List imageInUnit8List) async {
+  Future<String> uint8ToFile(Uint8List? imageInUnit8List) async {
     String stamp = DateTime.now().millisecondsSinceEpoch.toString();
 
     final tempDir = await getTemporaryDirectory();
     String path = '${tempDir.path}/drawing${stamp}.png';
     File file = await File(path).create();
     print(path);
-    file.writeAsBytesSync(imageInUnit8List);
+    file.writeAsBytesSync(imageInUnit8List!);
     return path;
   }
 
   void showDrawing(PictureDetails picture, BuildContext dialogContext, w) {
-    File image;
+    late File image;
     showDialog(
       context: context,
       builder: (context) {
@@ -196,13 +198,13 @@ class _CanvasState extends State<Canvas> {
                             }
                             String out;
 
-                            uint8ToFile(snapshot.data).then((value) {
+                            uint8ToFile(snapshot.data!).then((value) {
                               out = value;
                               dev.log("[DEBUG] >>> Image Out: " + out);
                               image = File(out);
                             });
 
-                            return Image.memory(snapshot.data);
+                            return Image.memory(snapshot.data!);
                           default:
                             return Container(
                               child: FractionallySizedBox(
@@ -369,7 +371,7 @@ class _CanvasState extends State<Canvas> {
                   tooltip: 'Clear',
                   onPressed: () {
                     newPainterController();
-                    this.imageFile = null;
+                    // this.imageFile = null;
                     setState(() {});
                   },
                 ),

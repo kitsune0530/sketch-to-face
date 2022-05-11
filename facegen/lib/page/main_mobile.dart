@@ -134,7 +134,7 @@ class MainMenu extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Canvas()),
+                MaterialPageRoute(builder: (context) => Canvas(image: null,)),
               );
             },
             shape: RoundedRectangleBorder(

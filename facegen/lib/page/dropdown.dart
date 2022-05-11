@@ -9,7 +9,7 @@ import 'package:facegen/sizing.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:facegen/page/canvas.dart';
-import 'package:flutter_draw/painter.dart';
+// import 'package:flutter_draw/painter.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,7 +20,7 @@ import '../shared_prefs_helper.dart';
 class DropdownPage extends StatefulWidget {
   File image;
 
-  DropdownPage({Key key, this.image}) : super(key: key);
+  DropdownPage({Key? key, required this.image}) : super(key: key);
 
   // void initState() {
   //   image=null;
@@ -32,21 +32,21 @@ class DropdownPage extends StatefulWidget {
 
 class _DropdownPageState extends State<DropdownPage> {
 
-  String _choosenSkin;
-  String _choosenShape;
-  String _choosenEyes;
-  String _choosenNose;
-  String _choosenMouth;
-  String _choosenEars;
-  String _choosenHair;
-  String _choosenEyebrows;
-  String _choosenBeard;
+  String? _choosenSkin;
+  String? _choosenShape;
+  String? _choosenEyes;
+  String? _choosenNose;
+  String? _choosenMouth;
+  String? _choosenEars;
+  String? _choosenHair;
+  String? _choosenEyebrows;
+  String? _choosenBeard;
 
-  String gender;
-  File image;
+  String? gender;
+  late File image;
 
   // Future<List<String>> chooseList;
-  List<String> chooseList;
+  List<String>? chooseList;
 
 
 
@@ -146,7 +146,7 @@ class _DropdownPageState extends State<DropdownPage> {
       future: SharedPrefsHelper.getValue(name),
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
         return snapshot.hasData
-            ? buildDropdown(h, w, name, list, snapshot.data)
+            ? buildDropdown(h, w, name, list, snapshot.data!)
             : Container();
       },
     );
@@ -181,24 +181,15 @@ class _DropdownPageState extends State<DropdownPage> {
               width: w * 0.2,
               child: FlatButton(
                   onPressed: () {
-                    // Navigator.pop(context);
-                    // Navigator.pushAndRemoveUntil(
+
+                    // Navigator.push(
                     //   context,
                     //   MaterialPageRoute(
-                    //     builder: (BuildContext context) => SummaryPage(
+                    //     builder: (context) => SummaryPage.setImage(
                     //       image: image,
                     //     ),
                     //   ),
-                    //   ModalRoute.withName('/'),
                     // );
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SummaryPage.setImage(
-                          image: image,
-                        ),
-                      ),
-                    );
                   },
                   child: Text("next", style: TextStyle(fontSize: size.getTextFont()),),
                   color: Colors.blue,
@@ -212,7 +203,7 @@ class _DropdownPageState extends State<DropdownPage> {
   }
 
   Row buildDropdown(double h, double w, String name, List<String> list,
-      String dropdownValue) {
+      String? dropdownValue) {
     // print(dropdownValue);
     // String temp;
     return Row(
@@ -254,7 +245,7 @@ class _DropdownPageState extends State<DropdownPage> {
               SharedPreferences sharedPrefs =
                   await SharedPreferences.getInstance();
               setState(() {
-                dropdownValue = newValue;
+                dropdownValue = newValue!;
                 sharedPrefs.setString(name, newValue);
                 dropdownValue = sharedPrefs.getString(name);
                 // dev.log("Value: " + dropdownValue);
@@ -308,16 +299,16 @@ class _DropdownPageState extends State<DropdownPage> {
       print(defaultDes[6]);
     });
     chooseList = [
-      gender,
-      _choosenSkin,
-      _choosenShape,
-      _choosenEyes,
-      _choosenNose,
-      _choosenMouth,
-      _choosenEars,
-      _choosenHair,
-      _choosenEyebrows,
-      _choosenBeard
+      gender!,
+      _choosenSkin!,
+      _choosenShape!,
+      _choosenEyes!,
+      _choosenNose!,
+      _choosenMouth!,
+      _choosenEars!,
+      _choosenHair!,
+      _choosenEyebrows!,
+      _choosenBeard!
     ];
     print("0 : " + chooseList.toString());
   }

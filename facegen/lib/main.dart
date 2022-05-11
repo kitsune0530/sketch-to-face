@@ -138,7 +138,7 @@ Future<void> main() async {
 
 
 class MobileApp extends StatelessWidget {
-  const MobileApp({Key key}) : super(key: key);
+  const MobileApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
