@@ -38,9 +38,9 @@ class _CanvasState extends State<Canvas> {
   String? gender = 'Male';
   bool _finished = false;
 
-   File? imageFile;
-   PainterController? _controllerBackup;
-   PainterController? _controller;
+  File? imageFile;
+  PainterController? _controllerBackup;
+  PainterController? _controller;
 
   final picker = ImagePicker();
 
@@ -50,18 +50,25 @@ class _CanvasState extends State<Canvas> {
     } else {
       // this.imageFile!;
     }
-
     newPainterController();
   }
+
   void newPainterController() {
+    dev.log("[DEBUG] >>> Set New Image : " + imageFile.toString());
     _controller = new PainterController();
     _controllerBackup = new PainterController();
     dev.log("[DEBUG] >>> Set New Painter");
     _controller!.thickness = 5.0;
     _controller!.backgroundColor = Colors.white;
+    _controllerBackup!.thickness = 5.0;
+    _controllerBackup!.backgroundColor = Colors.red;
     // _controllerBackup = new PainterController();
     // _controllerBackup = null;
+    // setState(() {});
   }
+
+  bool showMain = true;
+  bool showBack = false;
 
   @override
   void initState() {
@@ -90,7 +97,7 @@ class _CanvasState extends State<Canvas> {
     double w = displayWidth(context);
     double h = displayHeight(context);
     MediaQuery.of(context).size.height - kToolbarHeight;
-
+    Widget paintBackup = Painter(_controllerBackup!);
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: buildBottomAppBar(w, context),
@@ -103,7 +110,7 @@ class _CanvasState extends State<Canvas> {
                 buildGenderButton(w, h),
                 buildCanvasButton(h),
                 buildCanvas(w, h),
-                buildSlider()
+                buildSlider(),
               ],
             ),
           ),
@@ -133,13 +140,20 @@ class _CanvasState extends State<Canvas> {
           actions: [
             FlatButton(
               onPressed: () {
-                Navigator.of(context, rootNavigator: true).pop(context);
                 setState(() {
-                  _controller = _controllerBackup;
+                  newPainterController();
+                  // showMain = true;
+                  // showBack = false;
+                  // this._controller?.continueDraw();
+                  // _controller!.pathHistory = _controllerBackup!.pathHistory;
                   // _finished = false;
                 });
+                Navigator.of(context, rootNavigator: true).pop(context);
               },
-              child: Text("Cancel", style: TextStyle(fontSize: size.getTextFont()),),
+              child: Text(
+                "Cancel",
+                style: TextStyle(fontSize: size.getTextFont()),
+              ),
               color: Colors.red,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
@@ -150,7 +164,7 @@ class _CanvasState extends State<Canvas> {
                 SharedPreferences sharedPrefs =
                     await SharedPreferences.getInstance();
                 sharedPrefs.setString("Gender", gender ?? "");
-
+                newPainterController();
                 // Navigator.of(context, rootNavigator: true).pop(context);
                 Navigator.push(
                   context,
@@ -163,7 +177,10 @@ class _CanvasState extends State<Canvas> {
                   // _finished = true;
                 });
               },
-              child: Text("Confirm", style: TextStyle(fontSize: size.getTextFont()),),
+              child: Text(
+                "Confirm",
+                style: TextStyle(fontSize: size.getTextFont()),
+              ),
               color: Colors.green,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
@@ -179,7 +196,7 @@ class _CanvasState extends State<Canvas> {
           ),
           title: Text(
             "Confirm Drawing",
-            style: TextStyle(fontSize:size.getTextFont()),
+            style: TextStyle(fontSize: size.getTextFont()),
           ),
           content: Container(
             height: size.getWidth(),
@@ -239,9 +256,15 @@ class _CanvasState extends State<Canvas> {
             FlatButton(
               onPressed: () {
                 Navigator.of(context, rootNavigator: true).pop('dialog');
-                setState(() {});
+                setState(() {
+                  showMain = true;
+                  showBack = false;
+                });
               },
-              child: Text("Cancel", style: TextStyle(fontSize: size.getTextFont()),),
+              child: Text(
+                "Cancel",
+                style: TextStyle(fontSize: size.getTextFont()),
+              ),
               color: Colors.red,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
@@ -262,7 +285,10 @@ class _CanvasState extends State<Canvas> {
                 );
                 setState(() {});
               },
-              child: Text("Confirm", style: TextStyle(fontSize: size.getTextFont()),),
+              child: Text(
+                "Confirm",
+                style: TextStyle(fontSize: size.getTextFont()),
+              ),
               color: Colors.green,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
@@ -280,7 +306,7 @@ class _CanvasState extends State<Canvas> {
             top: 10.0,
           ),
           title: Text(
-            "Confirm Drawing",
+            "Confirm Image",
             style: TextStyle(fontSize: size.getTextFont()),
           ),
           content: Container(
@@ -305,7 +331,8 @@ class _CanvasState extends State<Canvas> {
         children: [
           Text(
             "Gender",
-            style: TextStyle(fontSize: size.getTitleFont(), color: Colors.black),
+            style:
+                TextStyle(fontSize: size.getTitleFont(), color: Colors.black),
           ),
           Row(
             children: [
@@ -319,8 +346,7 @@ class _CanvasState extends State<Canvas> {
                   });
                 },
               ),
-              Text('Male',
-                style: TextStyle(fontSize: size.getTextFont())),
+              Text('Male', style: TextStyle(fontSize: size.getTextFont())),
               Radio(
                 value: 'Female',
                 groupValue: gender,
@@ -331,8 +357,7 @@ class _CanvasState extends State<Canvas> {
                   });
                 },
               ),
-              Text('Female',
-                  style: TextStyle(fontSize: size.getTextFont())),
+              Text('Female', style: TextStyle(fontSize: size.getTextFont())),
             ],
           ),
         ],
@@ -348,7 +373,7 @@ class _CanvasState extends State<Canvas> {
         children: <Widget>[
           Text("Canvas", style: TextStyle(fontSize: size.getTitleFont())),
           SizedBox(
-            width:size.getWidth()*0.5,
+            width: size.getWidth() * 0.5,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -373,7 +398,16 @@ class _CanvasState extends State<Canvas> {
                   tooltip: 'Clear',
                   onPressed: () {
                     newPainterController();
-                    // this.imageFile = null;
+                    // _controller
+                    showMain = true;
+                    showBack = false;
+
+                    imageFile = null;
+                    // Navigator.pop(context);
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => Canvas(image: null,)),
+                    // );
                     setState(() {});
                   },
                 ),
@@ -401,16 +435,38 @@ class _CanvasState extends State<Canvas> {
                         ),
                         border: Border.all(width: 1)),
                   )
-                : Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 1),
-                    ),
-                    // width: 128 * ((w / 128).floor()).toDouble(),
-                    // height: 128 * ((w / 128).floor()).toDouble(),
-                    width: w * 0.95,
-                    height: w * 0.95,
-                    child: AspectRatio(
-                        aspectRatio: 1 / 1, child: Painter(_controller!)),
+                : Column(
+                    children: [
+                      Visibility(
+                        visible: showMain,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 1),
+                          ),
+                          // width: 128 * ((w / 128).floor()).toDouble(),
+                          // height: 128 * ((w / 128).floor()).toDouble(),
+                          width: w * 0.95,
+                          height: w * 0.95,
+                          child: AspectRatio(
+                              aspectRatio: 1 / 1, child: Painter(_controller!)),
+                        ),
+                      ),
+                      Visibility(
+                        visible: showBack,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 1),
+                          ),
+                          // width: 128 * ((w / 128).floor()).toDouble(),
+                          // height: 128 * ((w / 128).floor()).toDouble(),
+                          width: w * 0.95,
+                          height: w * 0.95,
+                          child: AspectRatio(
+                              aspectRatio: 1 / 1,
+                              child: Painter(_controllerBackup!)),
+                        ),
+                      ),
+                    ],
                   ),
           ),
         ],
@@ -431,7 +487,7 @@ class _CanvasState extends State<Canvas> {
                 tooltip: ' draw',
                 onPressed: () {
                   setState(
-                        () {
+                    () {
                       _controller!.eraseMode = false;
                     },
                   );
@@ -440,11 +496,11 @@ class _CanvasState extends State<Canvas> {
               IconButton(
                 iconSize: size.getTextFont(),
                 icon: Icon(Icons.remove_circle),
-                tooltip:
-                (_controller!.eraseMode ? 'Disable' : 'Disable') + ' eraser',
+                tooltip: (_controller!.eraseMode ? 'Disable' : 'Disable') +
+                    ' eraser',
                 onPressed: () {
                   setState(
-                        () {
+                    () {
                       _controller!.eraseMode = true;
                     },
                   );
@@ -460,7 +516,8 @@ class _CanvasState extends State<Canvas> {
                   if (_controller!.isEmpty) {
                     showModalBottomSheet(
                         context: context,
-                        builder: (BuildContext context) => Text('Nothing to undo'));
+                        builder: (BuildContext context) =>
+                            Text('Nothing to undo'));
                   } else {
                     _controller!.undo();
                   }
@@ -477,10 +534,8 @@ class _CanvasState extends State<Canvas> {
                 child: SliderTheme(
                   data: SliderThemeData(
                     trackHeight: size.getPad(),
-
                   ),
                   child: Slider(
-
                     value: _controller!.thickness,
                     onChanged: (double value) => setState(() {
                       _controller!.thickness = value;
@@ -517,12 +572,14 @@ class _CanvasState extends State<Canvas> {
                     // );
                     Navigator.pop(context);
                   },
-                  child: Text("back", style: TextStyle(fontSize: size.getTextFont()),),
+                  child: Text(
+                    "back",
+                    style: TextStyle(fontSize: size.getTextFont()),
+                  ),
                   color: Colors.grey,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0))),
             ),
-
             SizedBox(
               width: w * 0.2,
               child: FlatButton(
@@ -531,14 +588,23 @@ class _CanvasState extends State<Canvas> {
                       showImage(imageFile!, context, w);
                       dev.log("Select Image");
                     } else {
-                      print(" >>> "+_controllerBackup.toString());
-                      _controllerBackup = _controller;
-                      print(" >>> "+_controllerBackup.toString());
+                      setState(() {
+                        //   _controllerBackup = new PainterController();
+                        //   _controllerBackup!.pathHistory = _controller!.pathHistory;
+                        // showMain = false;
+                        // showBack = true;
+                      });
+                      // dev.log(" >>> "+_controller!.pathHistory.toString());
+                      // _controllerBackup = new PainterController();
+                      // dev.log(" >>> "+_controllerBackup!.pathHistory.toString());
                       showDrawing(_controller!.finish(), context, w);
                     }
                     setState(() {});
                   },
-                  child: Text("next", style: TextStyle(fontSize: size.getTextFont()),),
+                  child: Text(
+                    "next",
+                    style: TextStyle(fontSize: size.getTextFont()),
+                  ),
                   color: Colors.blue,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0))),
