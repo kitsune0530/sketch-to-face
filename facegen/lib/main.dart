@@ -129,16 +129,16 @@ class WebApp extends StatelessWidget {
     ]);
 
 
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData.light(),
-        home:  MainMenu()
-    );
     // return MaterialApp(
     //     title: 'Flutter Demo',
     //     theme: ThemeData.light(),
-    //     home:  MainWebsite()
+    //     home:  MainMenu()
     // );
+    return MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData.light(),
+        home:  MainWebsite()
+    );
   }
 }
 
@@ -153,12 +153,16 @@ class MobileApp extends StatelessWidget {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
-
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData.light(),
-      home:  MainMenu()
+        title: 'Flutter Demo',
+        theme: ThemeData.light(),
+        home:  MainWebsite()
     );
+    // return MaterialApp(
+    //   title: 'Flutter Demo',
+    //   theme: ThemeData.light(),
+    //   home:  MainMenu()
+    // );
   }
 }
 

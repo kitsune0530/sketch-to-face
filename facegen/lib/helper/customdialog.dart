@@ -130,16 +130,16 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
                   child: TextButton(
                     onPressed: () {
                       if (kIsWeb) {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) => MainWebsite()),
-                        // );
-                      } else {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => MainMenu()),
+                          MaterialPageRoute(
+                              builder: (context) => MainWebsite()),
                         );
+                      } else {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => MainMenu()),
+                        // );
                       }
                     },
                     child: Text(
