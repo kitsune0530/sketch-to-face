@@ -238,11 +238,12 @@ class _WebSummaryState extends State<WebSummary> {
     size.setPad(pad);
     size.setHalfWidth(halfWidth - pad * 10);
     size.setWidth(width - pad);
-    size.setHeight(height - pad * 10);
+    size.setHeight(height - pad * 5);
     size.setW(w);
     size.setH(h);
 
-    this.canvasSize = 128 * 3;
+    // canvasSize = (128*(size.getHalfWidth()/128).floor()) as double;
+    canvasSize = size.getHalfWidth()-pad;
 
     return Scaffold(
       // bottomNavigationBar: buildBottomAppBar(w, context),
@@ -475,13 +476,13 @@ class _WebSummaryState extends State<WebSummary> {
               },
             ), SizedBox(
               // width: pad*5,
-              height: size.getPad()*2,
+              // height: size.getPad()*2,
               child: RaisedButton(
 
                   textColor: Colors.black,
                   color: Colors.blue,
                   child: Text(
-                    "Edit Sketch or Description", style: TextStyle(fontSize: size.getTextFont()),
+                    "Edit Sketch or Description", style: TextStyle(fontSize: size.getTitleFont()*0.8),
                   ),
                   onPressed: () {
                     // Navigator.pop(context);

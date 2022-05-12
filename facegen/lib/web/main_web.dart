@@ -133,9 +133,12 @@ class _MainWebsiteState extends State<MainWebsite> {
     size.setPad(pad);
     size.setHalfWidth(halfWidth - pad * 10);
     size.setWidth(width - pad);
-    size.setHeight(height - pad * 10);
+    size.setHeight(height - pad * 5);
     size.setW(w);
     size.setH(h);
+
+    // canvasSize = (128*(size.getHalfWidth()/128).floor()) as double;
+    canvasSize = size.getHalfWidth()-pad;
 
 
 
@@ -184,7 +187,7 @@ class _MainWebsiteState extends State<MainWebsite> {
                                   },
                                   child: Text(
                                     "next",
-                                    style: TextStyle(fontSize: size.getTitleFont()),
+                                    style: TextStyle(fontSize: size.getTitleFont()*0.8),
                                   ),
                                   color: Colors.blue,
                                   shape: RoundedRectangleBorder(
@@ -237,7 +240,7 @@ class _MainWebsiteState extends State<MainWebsite> {
               },
               child: Text(
                 "Cancel",
-                style: TextStyle(fontSize: size.getTitleFont()),
+                style: TextStyle(fontSize: size.getTitleFont()*0.8),
               ),
               color: Colors.red,
               shape: RoundedRectangleBorder(
@@ -266,7 +269,7 @@ class _MainWebsiteState extends State<MainWebsite> {
               },
               child: Text(
                 "Confirm",
-                style: TextStyle(fontSize: size.getTitleFont()),
+                style: TextStyle(fontSize: size.getTitleFont()*0.8),
               ),
               color: Colors.green,
               shape: RoundedRectangleBorder(
@@ -286,8 +289,8 @@ class _MainWebsiteState extends State<MainWebsite> {
             style: TextStyle(fontSize: size.getTitleFont()),
           ),
           content: Container(
-            height: size.getHeight(),
             width: size.getHalfWidth(),
+            height: size.getHeight()*0.7,
             child: Column(
               children: [
                 Expanded(
@@ -347,7 +350,7 @@ class _MainWebsiteState extends State<MainWebsite> {
               },
               child: Text(
                 "Cancel",
-                style: TextStyle(fontSize: size.getTextFont()),
+                style: TextStyle(fontSize: size.getTitleFont()*0.8),
               ),
               color: Colors.red,
               shape: RoundedRectangleBorder(
@@ -380,7 +383,7 @@ class _MainWebsiteState extends State<MainWebsite> {
               },
               child: Text(
                 "Confirm",
-                style: TextStyle(fontSize: size.getTitleFont()),
+                style: TextStyle(fontSize: size.getTitleFont()*0.8),
               ),
               color: Colors.green,
               shape: RoundedRectangleBorder(
@@ -404,7 +407,7 @@ class _MainWebsiteState extends State<MainWebsite> {
           ),
           content: Container(
             width: size.getHalfWidth(),
-            height: size.getHeight(),
+            height: size.getHeight()*0.7,
             decoration: BoxDecoration(
                 image: DecorationImage(
                   image: picture.image,
