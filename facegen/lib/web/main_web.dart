@@ -113,7 +113,7 @@ class _MainWebsiteState extends State<MainWebsite> {
     double h = displayHeight(context);
 
     w = 1280;
-    h = 720;
+    h = 800;
 
     // if(realh>realw){
     //   h = realw;
