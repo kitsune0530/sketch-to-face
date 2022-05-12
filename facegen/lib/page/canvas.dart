@@ -141,7 +141,7 @@ class _CanvasState extends State<Canvas> {
             FlatButton(
               onPressed: () {
                 setState(() {
-                  newPainterController();
+                  // newPainterController();
                   // showMain = true;
                   // showBack = false;
                   // this._controller?.continueDraw();
@@ -164,7 +164,7 @@ class _CanvasState extends State<Canvas> {
                 SharedPreferences sharedPrefs =
                     await SharedPreferences.getInstance();
                 sharedPrefs.setString("Gender", gender ?? "");
-                newPainterController();
+                // newPainterController();
                 // Navigator.of(context, rootNavigator: true).pop(context);
                 Navigator.push(
                   context,
