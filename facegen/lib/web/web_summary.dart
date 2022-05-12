@@ -223,8 +223,8 @@ class _WebSummaryState extends State<WebSummary> {
     MediaQuery.of(context).padding.top - kToolbarHeight;
     dev.log(w.toString() + " " + h.toString());
 
-    w = 1280;
-    h = 800;
+w = 1280;
+h = 768;
 
     double pad = w * 0.01;
     double halfWidth;
