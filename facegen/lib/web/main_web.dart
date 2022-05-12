@@ -30,6 +30,7 @@ class MainWebsite extends StatefulWidget {
 }
 
 class _MainWebsiteState extends State<MainWebsite> {
+  String gender = 'Male';
   String _choosenSkin = 'Light';
   String _choosenShape = 'Square/Triangle';
   String _choosenEyes = 'Monolid';
@@ -39,7 +40,6 @@ class _MainWebsiteState extends State<MainWebsite> {
   String _choosenHair = 'None';
   String _choosenEyebrows = 'None';
   String _choosenBeard = 'None';
-  String gender = 'Male';
 
   List<String>? chooseList;
 
@@ -76,12 +76,19 @@ class _MainWebsiteState extends State<MainWebsite> {
   //     imageFile = null;
   //   }
   // }
+
   _MainWebsiteState() {
+    // SharedPrefsHelper sharedPrefs = new SharedPrefsHelper();
+
+    newPainterController();
+
     setChosen();
   }
 
+
   newPainterController() {
-    _controller = PainterController();
+    _controller = new PainterController();
+    // _controllerBackup = new PainterController();
     _controller!.thickness = 5.0;
     _controller!.backgroundColor = Colors.white;
   }
@@ -97,14 +104,13 @@ class _MainWebsiteState extends State<MainWebsite> {
     dev.log("Save Image into \"imageFile\"");
   }
 
-
   @override
   Widget build(BuildContext context) {
     double w = displayWidth(context);
     double h = displayHeight(context);
     MediaQuery.of(context).padding.top - kToolbarHeight;
 
-    dev.log(w.toString()+" "+ h.toString());
+    dev.log(w.toString() + " " + h.toString());
 
     double pad = w * 0.01;
     double halfWidth = w * 0.5 - pad;
@@ -127,8 +133,6 @@ class _MainWebsiteState extends State<MainWebsite> {
     // size.setTitleFont(w * 0.1);
     // size.setTextFont(w * 0.05);
 
-
-
     size.setPad(pad);
     size.setHalfWidth(halfWidth - pad * 10);
     size.setWidth(width - pad);
@@ -148,12 +152,8 @@ class _MainWebsiteState extends State<MainWebsite> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        buildBorderContainer(
-                          WebCanvas(w, h), pad
-                        ),
-                        buildBorderContainer(
-                          WebDropdown(w, h), pad
-                        ),
+                        buildBorderContainer(WebCanvas(w, h), pad),
+                        buildBorderContainer(WebDropdown(w, h), pad),
                       ],
                     ),
                     Container(
@@ -165,14 +165,20 @@ class _MainWebsiteState extends State<MainWebsite> {
                             if (imageFile != null) {
                               showImage(imageFile!, context, w);
                             } else {
-                              print(" >>> " + _controllerBackup.toString());
-                              _controllerBackup = _controller;
-                              print(" >>> " + _controllerBackup.toString());
+                              setState(() {});
+                              // print(" >>> " + _controllerBackup.toString());
+                              // _controllerBackup = _controller;
+                              // print(" >>> " + _controllerBackup.toString());
                               showDrawing(_controller!.finish(), context, w);
+
+                              // newPainterController();
                             }
                             setState(() {});
                           },
-                          child: Text("next", style: TextStyle(fontSize: size.getTextFont()),),
+                          child: Text(
+                            "next",
+                            style: TextStyle(fontSize: size.getTextFont()),
+                          ),
                           color: Colors.blue,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0))),
@@ -186,8 +192,6 @@ class _MainWebsiteState extends State<MainWebsite> {
       ),
     );
   }
-
-
 
   Container WebCanvas(double w, double h) {
     return Container(
@@ -213,12 +217,12 @@ class _MainWebsiteState extends State<MainWebsite> {
           actions: [
             FlatButton(
               minWidth: size.getPad() * 5,
-              height: size.getPad()* 2,
+              height: size.getPad() * 2,
               onPressed: () {
-                Navigator.of(context, rootNavigator: true).pop(context);
+                // newPainterController();
                 setState(() {
-                  _controller = _controllerBackup;
                 });
+                Navigator.of(context, rootNavigator: true).pop(context);
               },
               child: Text(
                 "Cancel",
@@ -233,6 +237,9 @@ class _MainWebsiteState extends State<MainWebsite> {
               minWidth: size.getPad() * 5,
               height: size.getPad() * 2,
               onPressed: () async {
+                setState((){
+                  // newPainterController();
+                });
                 SharedPreferences sharedPrefs =
                     await SharedPreferences.getInstance();
                 sharedPrefs.setString("Gender", gender);
@@ -321,8 +328,11 @@ class _MainWebsiteState extends State<MainWebsite> {
               minWidth: size.getPad() * 5,
               height: size.getPad() * 2,
               onPressed: () {
+                setState(() {
+                // _controller = _controllerBackup;
+                // newPainterController();
+              });
                 Navigator.of(context, rootNavigator: true).pop('dialog');
-                setState(() {});
               },
               child: Text(
                 "Cancel",
@@ -341,8 +351,8 @@ class _MainWebsiteState extends State<MainWebsite> {
                     await SharedPreferences.getInstance();
                 sharedPrefs.setString("Gender", gender ?? "");
 
-                dev.log("[DEBUG] >>> ImageFile:"+imageFile.toString());
-                dev.log("[DEBUG] >>> ImageUint8:"+imageUint8.toString());
+                dev.log("[DEBUG] >>> ImageFile:" + imageFile.toString());
+                dev.log("[DEBUG] >>> ImageUint8:" + imageUint8.toString());
 
                 // Navigator.pop(context);
                 Navigator.of(context, rootNavigator: true).pop('dialog');
@@ -402,7 +412,10 @@ class _MainWebsiteState extends State<MainWebsite> {
       children: [
         Text(
           "Gender",
-          style: TextStyle(fontSize: size.getTitleFont(), color: Colors.black, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: size.getTitleFont(),
+              color: Colors.black,
+              fontWeight: FontWeight.bold),
         ),
         Padding(
           padding: EdgeInsets.only(top: size.getPad(), bottom: size.getPad()),
@@ -445,7 +458,9 @@ class _MainWebsiteState extends State<MainWebsite> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Text("Canvas", style: TextStyle(fontSize: size.getTitleFont(), fontWeight: FontWeight.bold)),
+        Text("Canvas",
+            style: TextStyle(
+                fontSize: size.getTitleFont(), fontWeight: FontWeight.bold)),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -613,7 +628,8 @@ class _MainWebsiteState extends State<MainWebsite> {
         // dev.log("[DEBUG] SnapShot : " + snapshot.hasData.toString());
         // dev.log("[DEBUG] SnapShot Data : " + snapshot.data);
         return snapshot.hasData
-            ? buildDropdown(size.getH(), size.getW(), name, list, snapshot.data!)
+            ? buildDropdown(
+                size.getH(), size.getW(), name, list, snapshot.data!)
             : Container();
       },
     );

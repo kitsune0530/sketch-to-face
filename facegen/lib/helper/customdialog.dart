@@ -130,6 +130,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
                   child: TextButton(
                     onPressed: () {
                       if (kIsWeb) {
+                        // Navigator.pushNamedAndRemoveUntil(context, "/newRouteName", (r) => false);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
