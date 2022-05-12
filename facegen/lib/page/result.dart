@@ -301,7 +301,7 @@ class _GeneratedState extends State<Generated> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-                child: generatedImage != null
+                child: generatedImage![selectedIntex] != null
                     ? Container(
                         width: w * 0.95,
                         height: h * 0.95,
@@ -470,7 +470,7 @@ class _GeneratedState extends State<Generated> {
     child: const Text("OK"),
     onPressed: () {},
   );
-  
+
   showSaved(BuildContext context) {
     String currImg = (selectedIntex+1).toString();
     return showDialog<void>(
@@ -481,7 +481,7 @@ class _GeneratedState extends State<Generated> {
             "Image "+currImg+" Saved",
             style: TextStyle(fontSize: size.getTextFont()),
           ),
-          actions: [],
+          actions: [ ],
         );
       },
     );

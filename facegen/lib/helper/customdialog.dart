@@ -22,9 +22,9 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
 
   _CustomAlertDialogState(){
     this.width = size.getWidth();
-    print(this.height);
+    print(size.getHalfWidth());
     this.height = size.getHeight();
-    print(this.height);
+    print(size.getHalfWidth());
     this.titleFont = size.getTitleFont();
     this.textFont = size.getTextFont();
   }
