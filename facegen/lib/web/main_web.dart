@@ -69,12 +69,15 @@ class _MainWebsiteState extends State<MainWebsite> {
     SharedPrefsHelper.resetValues();
   }
 
-  _WebCanvasState(Image image) {
-    if (image != null) {
-      imageFile = image;
-    } else {
-      imageFile = null;
-    }
+  // _MainWebsiteState(Image image) {
+  //   if (image != null) {
+  //     imageFile = image;
+  //   } else {
+  //     imageFile = null;
+  //   }
+  // }
+  _MainWebsiteState() {
+    setChosen();
   }
 
   newPainterController() {

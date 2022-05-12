@@ -136,10 +136,10 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
                               builder: (context) => MainWebsite()),
                         );
                       } else {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => MainMenu()),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => MainMenu()),
+                        // );
                       }
                     },
                     child: Text(

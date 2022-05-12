@@ -128,6 +128,12 @@ class WebApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
     ]);
 
+
+    // return MaterialApp(
+    //     title: 'Flutter Demo',
+    //     theme: ThemeData.light(),
+    //     home:  MainMenu()
+    // );
     return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData.light(),
@@ -147,12 +153,16 @@ class MobileApp extends StatelessWidget {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
-
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData.light(),
-      home:  MainMenu()
+        title: 'Flutter Demo',
+        theme: ThemeData.light(),
+        home:  MainWebsite()
     );
+    // return MaterialApp(
+    //   title: 'Flutter Demo',
+    //   theme: ThemeData.light(),
+    //   home:  MainMenu()
+    // );
   }
 }
 
