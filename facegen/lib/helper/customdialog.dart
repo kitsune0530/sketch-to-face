@@ -73,54 +73,6 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
                 ),
               ),
 
-              // Divider(
-              //   height: 1,
-              // ),
-              // Container(
-              //   width: MediaQuery.of(context).size.width,
-              //   // height: width! * 0.1,
-              //   child: InkWell(
-              //     highlightColor: Colors.grey[200],
-              //     onTap: () {
-              //
-              //       if(kIsWeb){
-              //         // Navigator.push(
-              //         //   context,
-              //         //   MaterialPageRoute(builder: (context) => MainWebsite()),
-              //         // );
-              //       }else{
-              //         Navigator.push(
-              //           context,
-              //           MaterialPageRoute(builder: (context) => MainMenu()),
-              //         );
-              //       }
-              //     },
-              //     child: Center(
-              //       child: Text(
-              //         "Start Over",
-              //         style: TextStyle(
-              //           fontSize: textFont,
-              //           color: Theme.of(context).primaryColor,
-              //           fontWeight: FontWeight.bold,
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              // Divider(
-              //   height: 1,
-              // ),
-              // Container(
-              //   width: MediaQuery.of(context).size.width,
-              //   // height: width! * 0.1,
-              //   child: TextButton(
-              //     onPressed: () {
-              //       Navigator.pop(context, 'Cancel');
-              //     },
-              //     child: Text("Cancel"),
-              //   )
-              // ),
-
               const Divider(
                 height: 1,
               ),

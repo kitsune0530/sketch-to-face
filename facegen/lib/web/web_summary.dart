@@ -222,23 +222,26 @@ class _WebSummaryState extends State<WebSummary> {
     double h = displayHeight(context);
     MediaQuery.of(context).padding.top - kToolbarHeight;
     dev.log(w.toString() + " " + h.toString());
+    w = 1280;
+    h = 720;
 
-    // this.titleFont = h * 0.04;
-    // this.textFont = h * 0.02;
-    //
-    // double pad = w * 0.01;
-    // double halfWidth = w * 0.5 - pad;
-    // double width = w - pad;
-    // double height = h - pad;
-    // this.pad = pad;
-    // this.halfWidth = halfWidth - pad * 10;
-    // this.width = width - pad;
-    // this.height = height - pad * 10;
-    // // this.height = height - pad * 10;
-    // this.w = w;
-    // this.h = h;
-    //
-    this.canvasSize = 128 * 4.toDouble();
+    double pad = w * 0.01;
+    double halfWidth;
+    halfWidth = w * 0.5 - pad;
+
+    double width = w - pad;
+    double height = h - pad;
+
+    size.setTitleFont(h * 0.04);
+    size.setTextFont(h * 0.02);
+    size.setPad(pad);
+    size.setHalfWidth(halfWidth - pad * 10);
+    size.setWidth(width - pad);
+    size.setHeight(height - pad * 10);
+    size.setW(w);
+    size.setH(h);
+
+    this.canvasSize = 128 * 3;
 
     return Scaffold(
       // bottomNavigationBar: buildBottomAppBar(w, context),
@@ -249,30 +252,34 @@ class _WebSummaryState extends State<WebSummary> {
             controller: controllerOne,
             child: ListView(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                Column(
                   children: [
-                    buildBorderContainer(
-                        Container(
-                          width: size.getHalfWidth(),
-                          height: size.getHalfWidth(),
-                          child: Column(
-                            children: [
-                              buildSumCanvas(),
-                              buildSumDescription(),
-                            ],
-                          ),
-                        ),
-                        size.getPad()),
-                    buildBorderContainer(
-                        Container(
-                          width: size.getHalfWidth(),
-                          height: size.getHalfWidth(),
-                          child: Column(
-                            children: [buildResult(), buildSelectOutput(), buildButtons(context)],
-                          ),
-                        ),
-                        size.getPad())
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        buildBorderContainer(
+                            Container(
+                              width: size.getHalfWidth(),
+                              height: size.getHeight(),
+                              child: Column(
+                                children: [
+                                  buildSumCanvas(),
+                                  buildSumDescription(),
+                                ],
+                              ),
+                            ),
+                            size.getPad()),
+                        buildBorderContainer(
+                            Container(
+                              width: size.getHalfWidth(),
+                              height: size.getHeight(),
+                              child: Column(
+                                children: [buildResult(), buildSelectOutput(), buildButtons(context)],
+                              ),
+                            ),
+                            size.getPad())
+                      ],
+                    ),
                   ],
                 ),
               ],
@@ -282,6 +289,8 @@ class _WebSummaryState extends State<WebSummary> {
       ),
     );
   }
+
+
 
   /*
   *

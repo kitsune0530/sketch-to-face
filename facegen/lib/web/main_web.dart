@@ -21,7 +21,7 @@ import 'package:path_provider/path_provider.dart';
 
 import '../main.dart';
 import '../shared_prefs_helper.dart';
-
+// import 'package:desktop_window/desktop_window.dart';
 class MainWebsite extends StatefulWidget {
   const MainWebsite({Key? key}) : super(key: key);
 
@@ -79,7 +79,6 @@ class _MainWebsiteState extends State<MainWebsite> {
 
   _MainWebsiteState() {
     // SharedPrefsHelper sharedPrefs = new SharedPrefsHelper();
-
     newPainterController();
 
     setChosen();
@@ -104,35 +103,33 @@ class _MainWebsiteState extends State<MainWebsite> {
     dev.log("Save Image into \"imageFile\"");
   }
 
+  double canvasSize = 128*3;
+
   @override
   Widget build(BuildContext context) {
+    double realw = displayWidth(context);
+    double realh = displayHeight(context);
     double w = displayWidth(context);
     double h = displayHeight(context);
-    MediaQuery.of(context).padding.top - kToolbarHeight;
 
+    w = 1280;
+    h = 720;
+
+    // if(realh>realw){
+    //   h = realw;
+    //   w = realh;
+    // }
+    MediaQuery.of(context).padding.top - kToolbarHeight;
     dev.log(w.toString() + " " + h.toString());
 
     double pad = w * 0.01;
-    double halfWidth = w * 0.5 - pad;
+    double halfWidth;
+    halfWidth = w * 0.5 - pad;
     double width = w - pad;
     double height = h - pad;
 
-    // this.titleFont = h * 0.04;
-    // this.textFont = h * 0.02;
     size.setTitleFont(h * 0.04);
     size.setTextFont(h * 0.02);
-//
-//     this.pad = pad;
-//     this.halfWidth = halfWidth - pad * 10;
-//     this.width = width - pad;
-//     this.height = height - pad * 10;
-//     // this.height = height - pad * 10;
-//     this.w = w;
-//     this.h = h;
-
-    // size.setTitleFont(w * 0.1);
-    // size.setTextFont(w * 0.05);
-
     size.setPad(pad);
     size.setHalfWidth(halfWidth - pad * 10);
     size.setWidth(width - pad);
@@ -140,9 +137,12 @@ class _MainWebsiteState extends State<MainWebsite> {
     size.setW(w);
     size.setH(h);
 
+
+
+
     return Scaffold(
       body: Padding(
-        padding: new EdgeInsets.all(pad),
+        padding: new EdgeInsets.all(size.getPad()),
         child: Container(
           child: Scrollbar(
             child: ListView(
@@ -156,32 +156,43 @@ class _MainWebsiteState extends State<MainWebsite> {
                         buildBorderContainer(WebDropdown(w, h), pad),
                       ],
                     ),
-                    Container(
-                      margin: EdgeInsets.all(pad),
-                      width: pad * 10,
-                      height: pad * 2,
-                      child: FlatButton(
-                          onPressed: () {
-                            if (imageFile != null) {
-                              showImage(imageFile!, context, w);
-                            } else {
-                              setState(() {});
-                              // print(" >>> " + _controllerBackup.toString());
-                              // _controllerBackup = _controller;
-                              // print(" >>> " + _controllerBackup.toString());
-                              showDrawing(_controller!.finish(), context, w);
-
-                              // newPainterController();
-                            }
-                            setState(() {});
-                          },
-                          child: Text(
-                            "next",
-                            style: TextStyle(fontSize: size.getTextFont()),
+                    SizedBox(
+                      width: w,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.all(pad),
+                            width: pad * 10,
+                            // height: pad * 2,
+                            child: SizedBox(
+                              // width: pad*5,
+                              child: FlatButton(
+                                minWidth: pad*5,
+                                  onPressed: () {
+                                    if (imageFile != null) {
+                                      showImage(imageFile!, context, w);
+                                    } else {
+                                      setState(() {});
+                                      // print(" >>> " + _controllerBackup.toString());
+                                      // _controllerBackup = _controller;
+                                      // print(" >>> " + _controllerBackup.toString());
+                                      showDrawing(_controller!.finish(), context, w);
+                                      // newPainterController();
+                                    }
+                                    setState(() {});
+                                  },
+                                  child: Text(
+                                    "next",
+                                    style: TextStyle(fontSize: size.getTitleFont()),
+                                  ),
+                                  color: Colors.blue,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0))),
+                            ),
                           ),
-                          color: Colors.blue,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0))),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -226,7 +237,7 @@ class _MainWebsiteState extends State<MainWebsite> {
               },
               child: Text(
                 "Cancel",
-                style: TextStyle(fontSize: size.getTextFont()),
+                style: TextStyle(fontSize: size.getTitleFont()),
               ),
               color: Colors.red,
               shape: RoundedRectangleBorder(
@@ -255,7 +266,7 @@ class _MainWebsiteState extends State<MainWebsite> {
               },
               child: Text(
                 "Confirm",
-                style: TextStyle(fontSize: size.getTextFont()),
+                style: TextStyle(fontSize: size.getTitleFont()),
               ),
               color: Colors.green,
               shape: RoundedRectangleBorder(
@@ -369,7 +380,7 @@ class _MainWebsiteState extends State<MainWebsite> {
               },
               child: Text(
                 "Confirm",
-                style: TextStyle(fontSize: size.getTextFont()),
+                style: TextStyle(fontSize: size.getTitleFont()),
               ),
               color: Colors.green,
               shape: RoundedRectangleBorder(
@@ -458,9 +469,17 @@ class _MainWebsiteState extends State<MainWebsite> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Text("Canvas",
-            style: TextStyle(
-                fontSize: size.getTitleFont(), fontWeight: FontWeight.bold)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+
+            Text("Canvas",
+                style: TextStyle(
+                    fontSize: size.getTitleFont(), fontWeight: FontWeight.bold)),
+            Text("(If unable to draw, press Clear Button)")
+          ],
+        ),
+
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -542,8 +561,8 @@ class _MainWebsiteState extends State<MainWebsite> {
           Container(
             child: imageFile != null
                 ? Container(
-                    width: (canvas * 4),
-                    height: canvas * 4,
+                    width: canvasSize,
+                    height: canvasSize,
                     decoration: BoxDecoration(
                         image: DecorationImage(
                           image: imageFile!.image,
@@ -554,8 +573,8 @@ class _MainWebsiteState extends State<MainWebsite> {
                     decoration: BoxDecoration(
                       border: Border.all(width: 1),
                     ),
-                    width: canvas * 4,
-                    height: canvas * 4,
+                    width: canvasSize,
+                    height: canvasSize,
                     child: AspectRatio(
                         aspectRatio: 1 / 1, child: Painter(_controller!)),
                   ),
@@ -591,7 +610,7 @@ class _MainWebsiteState extends State<MainWebsite> {
         children: <Widget>[
           Row(children: <Widget>[
             Text(
-              "Characters",
+              "Description",
               style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: size.getTitleFont(),
@@ -628,20 +647,18 @@ class _MainWebsiteState extends State<MainWebsite> {
         // dev.log("[DEBUG] SnapShot : " + snapshot.hasData.toString());
         // dev.log("[DEBUG] SnapShot Data : " + snapshot.data);
         return snapshot.hasData
-            ? buildDropdown(
-                size.getH(), size.getW(), name, list, snapshot.data!)
+            ? buildDropdown(name, list, snapshot.data!)
             : Container();
       },
     );
   }
 
-  Row buildDropdown(double h, double w, String name, List<String> list,
-      String dropdownValue) {
+  Row buildDropdown(String name, List<String> list, String dropdownValue) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Container(
-          width: size.getHalfWidth() / 3,
+          width: size.getHalfWidth() / 4,
           child: Text(
             name,
             style: TextStyle(
@@ -651,46 +668,44 @@ class _MainWebsiteState extends State<MainWebsite> {
             ),
           ),
         ),
-        Expanded(
-          child: DropdownButton<String>(
-            value: dropdownValue,
+        DropdownButton<String>(
+          value: dropdownValue,
+          style: TextStyle(
+            fontSize: size.getTextFont(),
+            color: Colors.black,
+          ),
+          items: list.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: SizedBox(
+                width: size.getHalfWidth() / 2,
+                child: Text(
+                  value,
+                  textAlign: TextAlign.end,
+                  style: TextStyle(
+                    fontSize: size.getTextFont(),
+                  ),
+                ),
+              ),
+            );
+          }).toList(),
+          hint: Text(
+            "Please Select",
             style: TextStyle(
               fontSize: size.getTextFont(),
               color: Colors.black,
             ),
-            items: list.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: SizedBox(
-                  width: size.getHalfWidth() / 2,
-                  child: Text(
-                    value,
-                    textAlign: TextAlign.end,
-                    style: TextStyle(
-                      fontSize: size.getTextFont(),
-                    ),
-                  ),
-                ),
-              );
-            }).toList(),
-            hint: Text(
-              "Please Select",
-              style: TextStyle(
-                fontSize: size.getTextFont(),
-                color: Colors.black,
-              ),
-            ),
-            onChanged: (newValue) async {
-              SharedPreferences sharedPrefs =
-                  await SharedPreferences.getInstance();
-              setState(() {
-                dropdownValue = newValue!;
-                sharedPrefs.setString(name, newValue);
-                dropdownValue = sharedPrefs.getString(name)!;
-                setChosen();
-              });
-            },
           ),
+          onChanged: (newValue) async {
+            SharedPreferences sharedPrefs =
+                await SharedPreferences.getInstance();
+            setState(() {
+              dropdownValue = newValue!;
+              sharedPrefs.setString(name, newValue);
+              dropdownValue = sharedPrefs.getString(name)!;
+              setChosen();
+            });
+          },
         )
       ],
     );
