@@ -5,11 +5,10 @@ import 'dart:developer' as dev;
 import 'package:facegen/helper/customdialog.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:image_downloader_web/image_downloader_web.dart';
 import 'package:facegen/helper/sizehelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_draw/painter.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:facegen/shared_prefs_helper.dart';
@@ -45,6 +44,7 @@ class _WebSummaryState extends State<WebSummary> {
   *
    */
 
+  final WebImageDownloader _webImageDownloader = WebImageDownloader();
   File? genFile;
   String stringByte = "";
   Image? img1;
@@ -54,22 +54,23 @@ class _WebSummaryState extends State<WebSummary> {
 
   int selectedIntex = 0;
 
-  String? gender,
-      _choosenSkin,
-      _choosenShape,
-      _choosenEyes,
-      _choosenNose,
-      _choosenMouth,
-      _choosenEars,
-      _choosenHair,
-      _choosenEyebrows,
-      _choosenBeard;
+  String gender='',
+      _choosenSkin='',
+      _choosenShape='',
+      _choosenEyes='',
+      _choosenNose='',
+      _choosenMouth='',
+      _choosenEars='',
+      _choosenHair='',
+      _choosenEyebrows='',
+      _choosenBeard='';
   // File? input;
   Image? input;
   String? _saveProgress = "";
   Uint8List temp = new Uint8List(1);
   List<Uint8List>?  generatedByte;
-
+  final ScrollController controllerOne = ScrollController();
+  final ScrollController controllerTwo = ScrollController();
   Uint8List? uint8ListImage;
 
   Future<List<int>>? descriptionList;
@@ -132,27 +133,27 @@ class _WebSummaryState extends State<WebSummary> {
 
         for (var j = 0; j < length; j++) {
           request.fields[desType[j]] = tempList[j].toString();
-
-          // dev.log(request.fields[desType[i]]!);
         }
 
         dev.log("[DEBUG] >>> Set Field Uri ");
 
-        File inputFile = File.fromRawPath(uint8ListImage!);
+        Future<Uint8List> futureUint8(Uint8List uint8) async {
+          return uint8;
+        }
 
-
-        dev.log("[DEBUG] >>> Set File :" + inputFile.toString());
+        Stream<Uint8List> stream = Stream<Uint8List>.fromFuture(futureUint8(uint8ListImage!));
 
         request.files.add(
           http.MultipartFile(
             'image',
-            inputFile!.readAsBytes().asStream(),
-            inputFile!.lengthSync(),
+            stream,
+            uint8ListImage!.lengthInBytes,
             filename: "filename",
             contentType: MediaType('image', 'png'),
           ),
         );
 
+        dev.log("[DEBUG] >>> Set File :" + request.files.toString());
 
         dev.log("[DEBUG] >>> Set Request File :" + request.files.toString());
 
@@ -244,6 +245,7 @@ class _WebSummaryState extends State<WebSummary> {
         padding: EdgeInsets.all(size.getPad()),
         child: Container(
           child: Scrollbar(
+            controller: controllerOne,
             child: ListView(
               children: [
                 Row(
@@ -297,44 +299,27 @@ class _WebSummaryState extends State<WebSummary> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            RaisedButton(
-              textColor: Colors.black,
-              color: Colors.grey,
-              child: Text(
-                "1",
-                style: TextStyle(fontSize: size.getTextFont())
-              ),
-              onPressed: () {},
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-            ),
-            RaisedButton(
-              textColor: Colors.black,
-              color: Colors.grey,
-              child: Text(
-                "2",
-                  style: TextStyle(fontSize: size.getTextFont())
-              ),
-              onPressed: () {},
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-            ),
-            RaisedButton(
-              textColor: Colors.black,
-              color: Colors.grey,
-              child: Text(
-                "3",
-                  style: TextStyle(fontSize: size.getTextFont())
-              ),
-              onPressed: () {},
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-            )
+            buildSelectImageBtn(0),
+            buildSelectImageBtn(1),
+            buildSelectImageBtn(2),
           ],
         ),
+      ),
+    );
+  }
+
+  RaisedButton buildSelectImageBtn(int idx) {
+    String strIdx = (idx+1).toString();
+    return RaisedButton(
+      textColor: Colors.black,
+      color: Colors.grey,
+      child: Text(strIdx, style: TextStyle(fontSize: size.getTextFont())),
+      onPressed: () {
+        selectedIntex = idx;
+        setState(() {});
+      },
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
       ),
     );
   }
@@ -382,19 +367,20 @@ class _WebSummaryState extends State<WebSummary> {
             padding:
                 EdgeInsets.all(size.getPad()),
             child: Scrollbar(
+              controller: controllerTwo,
               isAlwaysShown: true,
               child: SingleChildScrollView(
                 child: Text(
                   "${gender}\n"
-                  "${PrintDes("skin, ", _choosenSkin!)}"
-                  "${PrintDes("shape, ", _choosenShape!)}"
-                  "${PrintDes("eyes, ", _choosenEyes!)}"
-                  "${PrintDes("nose, ", _choosenNose!)}"
-                  "${PrintDes("mouth, ", _choosenMouth!)}"
-                  "${PrintDes("ears, ", _choosenEars!)}"
-                  "${PrintDes("hair, ", _choosenHair!)}"
-                  "${PrintDes("eyebrows, ", _choosenEyebrows!)}"
-                  "${PrintDes("beard", _choosenBeard!)}",
+                  "${PrintDes("skin, ", _choosenSkin)}"
+                  "${PrintDes("shape, ", _choosenShape)}"
+                  "${PrintDes("eyes, ", _choosenEyes)}"
+                  "${PrintDes("nose, ", _choosenNose)}"
+                  "${PrintDes("mouth, ", _choosenMouth)}"
+                  "${PrintDes("ears, ", _choosenEars)}"
+                  "${PrintDes("hair, ", _choosenHair)}"
+                  "${PrintDes("eyebrows, ", _choosenEyebrows)}"
+                  "${PrintDes("beard", _choosenBeard)}",
                   style: TextStyle(fontSize: size.getTextFont()),
                 ),
               ),
@@ -464,38 +450,6 @@ class _WebSummaryState extends State<WebSummary> {
     );
   }
 
-  Column buildDescription(BuildContext context) {
-    return Column(
-      children: [
-        Text("Descriptions", style: TextStyle(fontSize: 20)),
-        Container(
-          width: size.getHalfWidth(),
-          height: size.getH() * 0.5,
-          child: Padding(
-              padding: EdgeInsets.all(0),
-              child: Scrollbar(
-            isAlwaysShown: true,
-            child: SingleChildScrollView(
-              child: Text(
-                "${gender}\n"
-                "${PrintDes("skin, ", _choosenSkin!)}"
-                "${PrintDes("shape, ", _choosenShape!)}"
-                "${PrintDes("eyes, ", _choosenEyes!)}"
-                "${PrintDes("nose, ", _choosenNose!)}"
-                "${PrintDes("mouth, ", _choosenMouth!)}"
-                "${PrintDes("ears, ", _choosenEars!)}"
-                "${PrintDes("hair, ", _choosenHair!)}"
-                "${PrintDes("eyebrows, ", _choosenEyebrows!)}"
-                "${PrintDes("beard", _choosenBeard!)}",
-                style: TextStyle(fontSize: size.getTextFont()),
-              ),
-            ),
-          )),
-        ),
-      ],
-    );
-  }
-
   Padding buildButtons(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: size.getPad(), bottom: size.getPad()),
@@ -506,9 +460,7 @@ class _WebSummaryState extends State<WebSummary> {
               icon: const Icon(Icons.save_alt_outlined),
               splashColor: Colors.black,
               onPressed: () async {
-
-
-
+                await _webImageDownloader.downloadImageFromUInt8List(uInt8List: generatedByte![selectedIntex]) ;
               },
             ), SizedBox(
               // width: pad*5,
@@ -535,12 +487,12 @@ class _WebSummaryState extends State<WebSummary> {
                     return SizedBox(
                       width: size.getHalfWidth()/2,
                       height: size.getHalfWidth()/2,
-                      child: Text("a")
-                      // CustomAlertDialog(
-                      //   title: "Warning!",
-                      //   description: "The created image will disappear\n" +
-                      //       "Make sure to save the image before return."
-                      // ),
+                      child:
+                      CustomAlertDialog(
+                        title: "Warning!",
+                        description: "The created image will disappear\n" +
+                            "Make sure to save the image before return."
+                      ),
                     );
                   },
                 ),
