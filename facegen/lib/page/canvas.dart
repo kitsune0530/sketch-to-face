@@ -14,6 +14,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:painter/painter.dart';
 import 'package:facegen/helper/sizehelper.dart';
 import 'package:flutter/services.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
@@ -52,6 +53,8 @@ class _CanvasState extends State<Canvas> {
     }
     newPainterController();
   }
+
+  ScreenshotController _screenshotController = new ScreenshotController();
 
   void newPainterController() {
     dev.log("[DEBUG] >>> Set New Image : " + imageFile.toString());
@@ -130,7 +133,7 @@ class _CanvasState extends State<Canvas> {
     return path;
   }
 
-  void showDrawing(PictureDetails picture, BuildContext dialogContext, w) {
+  void showDrawing(ScreenshotController picture, BuildContext dialogContext, w) {
     File? image;
     showDialog(
       context: context,
@@ -140,14 +143,7 @@ class _CanvasState extends State<Canvas> {
           actions: [
             FlatButton(
               onPressed: () {
-                setState(() {
-                  // newPainterController();
-                  // showMain = true;
-                  // showBack = false;
-                  // this._controller?.continueDraw();
-                  // _controller!.pathHistory = _controllerBackup!.pathHistory;
-                  // _finished = false;
-                });
+                setState(() {});
                 Navigator.of(context, rootNavigator: true).pop(context);
               },
               child: Text(
@@ -206,10 +202,10 @@ class _CanvasState extends State<Canvas> {
                 Expanded(
                   child: Container(
                     alignment: Alignment.center,
-                    child: FutureBuilder<Uint8List>(
-                      future: picture.toPNG(),
+                    child: FutureBuilder<Uint8List?>(
+                      future: picture.capture(),
                       builder: (BuildContext context,
-                          AsyncSnapshot<Uint8List> snapshot) {
+                          AsyncSnapshot<Uint8List?> snapshot) {
                         switch (snapshot.connectionState) {
                           case ConnectionState.done:
                             if (snapshot.hasError) {
@@ -437,33 +433,20 @@ class _CanvasState extends State<Canvas> {
                   )
                 : Column(
                     children: [
-                      Visibility(
-                        visible: showMain,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(width: 1),
-                          ),
-                          // width: 128 * ((w / 128).floor()).toDouble(),
-                          // height: 128 * ((w / 128).floor()).toDouble(),
-                          width: w * 0.95,
-                          height: w * 0.95,
-                          child: AspectRatio(
-                              aspectRatio: 1 / 1, child: Painter(_controller!)),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 1),
                         ),
-                      ),
-                      Visibility(
-                        visible: showBack,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(width: 1),
+                        // width: 128 * ((w / 128).floor()).toDouble(),
+                        // height: 128 * ((w / 128).floor()).toDouble(),
+                        width: w * 0.95,
+                        height: w * 0.95,
+                        child: AspectRatio(
+                          aspectRatio: 1 / 1,
+                          child: Screenshot(
+                            controller: _screenshotController,
+                            child: Painter(_controller!),
                           ),
-                          // width: 128 * ((w / 128).floor()).toDouble(),
-                          // height: 128 * ((w / 128).floor()).toDouble(),
-                          width: w * 0.95,
-                          height: w * 0.95,
-                          child: AspectRatio(
-                              aspectRatio: 1 / 1,
-                              child: Painter(_controllerBackup!)),
                         ),
                       ),
                     ],
@@ -583,21 +566,24 @@ class _CanvasState extends State<Canvas> {
             SizedBox(
               width: w * 0.2,
               child: FlatButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (imageFile != null) {
                       showImage(imageFile!, context, w);
                       dev.log("Select Image");
                     } else {
                       setState(() {
-                        //   _controllerBackup = new PainterController();
-                        //   _controllerBackup!.pathHistory = _controller!.pathHistory;
-                        // showMain = false;
-                        // showBack = true;
                       });
-                      // dev.log(" >>> "+_controller!.pathHistory.toString());
-                      // _controllerBackup = new PainterController();
-                      // dev.log(" >>> "+_controllerBackup!.pathHistory.toString());
-                      showDrawing(_controller!.finish(), context, w);
+
+                      // await _screenshotController.captureAsUiImage();
+
+                      // dev.log(captured.toString());
+
+
+
+
+
+                      // showDrawing(_controller!.finish(), context, w);
+                      showDrawing(_screenshotController, context, w);
                     }
                     setState(() {});
                   },
