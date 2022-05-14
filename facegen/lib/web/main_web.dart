@@ -14,6 +14,7 @@ import 'package:image_picker/image_picker.dart';
 // import 'package:image_picker_web/image_picker_web.dart';
 import 'package:painter/painter.dart';
 import 'package:facegen/helper/sizehelper.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'dart:developer' as dev;
@@ -105,6 +106,8 @@ class _MainWebsiteState extends State<MainWebsite> {
 
   double canvasSize = 128*3;
 
+  ScreenshotController _screenshotController = new ScreenshotController();
+
   @override
   Widget build(BuildContext context) {
     double realw = displayWidth(context);
@@ -176,12 +179,8 @@ h = 768;
                                     if (imageFile != null) {
                                       showImage(imageFile!, context, w);
                                     } else {
+                                      showDrawing(_screenshotController, context, w);
                                       setState(() {});
-                                      // print(" >>> " + _controllerBackup.toString());
-                                      // _controllerBackup = _controller;
-                                      // print(" >>> " + _controllerBackup.toString());
-                                      showDrawing(_controller!.finish(), context, w);
-                                      // newPainterController();
                                     }
                                     setState(() {});
                                   },
@@ -221,7 +220,7 @@ h = 768;
     );
   }
 
-  void showDrawing(PictureDetails picture, BuildContext dialogContext, w) {
+  void showDrawing(ScreenshotController picture, BuildContext dialogContext, w) {
     late Image image;
     showDialog(
       context: context,
@@ -296,10 +295,10 @@ h = 768;
                 Expanded(
                   child: Container(
                     alignment: Alignment.center,
-                    child: FutureBuilder<Uint8List>(
-                      future: picture.toPNG(),
+                    child: FutureBuilder<Uint8List?>(
+                      future: picture.capture(),
                       builder: (BuildContext context,
-                          AsyncSnapshot<Uint8List> snapshot) {
+                          AsyncSnapshot<Uint8List?> snapshot) {
                         switch (snapshot.connectionState) {
                           case ConnectionState.done:
                             if (snapshot.hasError) {
