@@ -1,21 +1,17 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:developer' as dev;
 import 'package:facegen/helper/customdialog.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:image_downloader_web/image_downloader_web.dart';
 import 'package:facegen/helper/sizehelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:facegen/shared_prefs_helper.dart';
 import 'package:flutter/rendering.dart';
-
 import 'package:http_parser/http_parser.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import '../main.dart';
 import '../shared_prefs_helper.dart';
 
@@ -361,7 +357,17 @@ class _WebSummaryState extends State<WebSummary> {
               children: [
                 Column(
                   children: [
-                    Text("*This application is built for Web on PC only*"),
+                    Container(
+                      child: Column(
+                        children: [
+                          Text("*This application is built for Web on PC only*"),
+                          InkWell(
+                            child: Text("Download for Android Here", style: TextStyle(color: Colors.blue),),
+                            onTap: ()=> launch("https://drive.google.com/file/d/1dw0tfKC6d1SjSME-FNrj9n656veI7lXt/view?usp=sharing"),
+                          )
+                        ],
+                      ),
+                    ),
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(

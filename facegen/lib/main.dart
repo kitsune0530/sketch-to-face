@@ -4,7 +4,6 @@ import 'dart:developer' as dev;
 
 
 import 'package:camera/camera.dart';
-import 'package:facegen/page/main_mobile.dart';
 import 'package:facegen/shared_prefs_helper.dart';
 import 'package:facegen/sizing.dart';
 import 'package:facegen/web/main_web.dart';

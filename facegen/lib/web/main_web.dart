@@ -1,29 +1,21 @@
-import 'dart:io';
-
-// import 'dart:html' as html;
 import 'package:image_picker_web/image_picker_web.dart';
-import 'package:mime_type/mime_type.dart';
-import 'package:path/path.dart' as Path;
-
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:typed_data';
 import 'package:facegen/web/web_summary.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_picker/image_picker.dart';
-// import 'package:image_picker_web/image_picker_web.dart';
 import 'package:painter/painter.dart';
 import 'package:facegen/helper/sizehelper.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'dart:developer' as dev;
-import 'package:path_provider/path_provider.dart';
 
 import '../main.dart';
 import '../shared_prefs_helper.dart';
 
-// import 'package:desktop_window/desktop_window.dart';
 class MainWebsite extends StatefulWidget {
   const MainWebsite({Key? key}) : super(key: key);
 
@@ -152,7 +144,18 @@ class _MainWebsiteState extends State<MainWebsite> {
               children: [
                 Column(
                   children: [
-                    Text("*This application is built for Web on PC only*"),
+                    Container(
+                      child: Column(
+                        children: [
+                          Text("*This application is built for Web on PC only*"),
+                          InkWell(
+                            child: Text("Download for Android Here", style: TextStyle(color: Colors.blue),),
+                            onTap: ()=> launch("https://drive.google.com/file/d/1dw0tfKC6d1SjSME-FNrj9n656veI7lXt/view?usp=sharing"),
+                          )
+                        ],
+                      ),
+                    ),
+
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(

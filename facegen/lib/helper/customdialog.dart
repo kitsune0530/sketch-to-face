@@ -1,4 +1,3 @@
-import 'package:facegen/page/main_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../main.dart';
