@@ -165,8 +165,8 @@ class _WebSummaryState extends State<WebSummary> {
         var request = http.MultipartRequest(
           'POST',
           // Uri.parse("http://192.168.245.3:8086/generate"),
-          // Uri.parse("http://52.148.83.67:8086/generate"),
-          Uri.parse("http://10.160.131.121:8086/generate"),
+          Uri.parse("http://52.148.83.67:8086/generate"),
+          // Uri.parse("http://10.160.131.121:8086/generate"),
         );
 
         Map<String, String> headers = {"Content-type": "multipart/form-data"};
@@ -234,8 +234,8 @@ class _WebSummaryState extends State<WebSummary> {
         var request = http.MultipartRequest(
           'POST',
           // Uri.parse("http://192.168.245.3:8086/generate"),
-          // Uri.parse("http://52.148.83.67:8086/generate"),
-          Uri.parse("http://10.160.131.121:8086/generate_no_des"),
+          Uri.parse("http://52.148.83.67:8086/generate"),
+          // Uri.parse("http://10.160.131.121:8086/generate_no_des"),
         );
 
         Map<String, String> headers = {"Content-type": "multipart/form-data"};
@@ -601,6 +601,7 @@ class _WebSummaryState extends State<WebSummary> {
                   fontSize: size.getTitleFont(), fontWeight: FontWeight.bold)),
         ),
         Row(
+
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
@@ -636,7 +637,16 @@ class _WebSummaryState extends State<WebSummary> {
               ],
             ),
           ),
-        )
+        ),
+        IconButton(
+          icon: const Icon(Icons.save_alt_outlined),
+          splashColor: Colors.black,
+          onPressed: () async {
+            await _webImageDownloader.downloadImageFromUInt8List(
+                uInt8List: generatedNoDesByte![selectedNoDesIntex]);
+          },
+        ),
+
       ],
     );
   }
