@@ -161,7 +161,9 @@ class _CanvasState extends State<Canvas> {
                     await SharedPreferences.getInstance();
                 sharedPrefs.setString("Gender", gender ?? "");
                 // newPainterController();
+                Navigator.of(context, rootNavigator: true).pop(context);
                 // Navigator.of(context, rootNavigator: true).pop(context);
+
                 Navigator.push(
                   context,
                   MaterialPageRoute(

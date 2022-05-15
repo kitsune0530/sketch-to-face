@@ -149,7 +149,7 @@ class _GeneratedState extends State<Generated> {
         // generatedImage?.add(Image.memory(resBytes.buffer.asUint8List())) ;
         dev.log("[DEBUG] >>> Save Image into List.");
         setState(() {});
-        await Future.delayed(Duration(seconds: 1));
+        // await Future.delayed(Duration(milliseconds: 500));
       }
 
     } catch (e) {
