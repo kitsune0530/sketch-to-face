@@ -96,6 +96,7 @@ class _WebSummaryState extends State<WebSummary> {
     generatedImage?.add(input!);
     String? ImgLength = generatedImage?.length.toString();
     dev.log("[DEBUG] [Constructor] >>> GenerateImage Length : " + ImgLength!);
+
     getImage();
     getNoDesImage();
   }
@@ -230,7 +231,7 @@ class _WebSummaryState extends State<WebSummary> {
         var request = http.MultipartRequest(
           'POST',
           // Uri.parse("http://192.168.245.3:8086/generate"),
-          Uri.parse("http://52.148.83.67:8086/generate"),
+          Uri.parse("http://52.148.83.67:8086/generate_no_des"),
           // Uri.parse("http://10.160.131.121:8086/generate_no_des"),
         );
 
@@ -650,7 +651,7 @@ class _WebSummaryState extends State<WebSummary> {
           splashColor: Colors.black,
           onPressed: () async {
             await _webImageDownloader.downloadImageFromUInt8List(
-                uInt8List: generatedNoDesByte![selectedNoDesIntex]);
+                uInt8List: generatedNoDesByte![selectedNoDesIntex],imageQuality: 100);
           },
         ),
 
@@ -669,7 +670,7 @@ class _WebSummaryState extends State<WebSummary> {
               splashColor: Colors.black,
               onPressed: () async {
                 await _webImageDownloader.downloadImageFromUInt8List(
-                    uInt8List: generatedByte![selectedIntex]);
+                    uInt8List: generatedByte![selectedIntex],imageQuality: 100);
               },
             ),
             SizedBox(
