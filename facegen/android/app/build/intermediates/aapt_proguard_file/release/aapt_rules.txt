@@ -1,0 +1,5 @@
+-keep class androidx.core.app.CoreComponentFactory { <init>(); }
+-keep class com.example.facegen.EmbeddingV1Activity { <init>(); }
+-keep class com.example.facegen.MainActivity { <init>(); }
+-keep class io.flutter.embedding.android.FlutterActivity { <init>(); }
+-keep class io.flutter.plugins.imagepicker.ImagePickerFileProvider { <init>(); }
