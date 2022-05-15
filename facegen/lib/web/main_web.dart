@@ -22,6 +22,7 @@ import 'package:path_provider/path_provider.dart';
 
 import '../main.dart';
 import '../shared_prefs_helper.dart';
+
 // import 'package:desktop_window/desktop_window.dart';
 class MainWebsite extends StatefulWidget {
   const MainWebsite({Key? key}) : super(key: key);
@@ -85,7 +86,6 @@ class _MainWebsiteState extends State<MainWebsite> {
     setChosen();
   }
 
-
   newPainterController() {
     _controller = new PainterController();
     // _controllerBackup = new PainterController();
@@ -104,7 +104,7 @@ class _MainWebsiteState extends State<MainWebsite> {
     dev.log("Save Image into \"imageFile\"");
   }
 
-  double canvasSize = 128*3;
+  double canvasSize = 128 * 3;
 
   ScreenshotController _screenshotController = new ScreenshotController();
 
@@ -115,8 +115,8 @@ class _MainWebsiteState extends State<MainWebsite> {
     double w = displayWidth(context);
     double h = displayHeight(context);
 
-w = 1280;
-h = 768;
+    w = 1280;
+    h = 768;
 
     // if(realh>realw){
     //   h = realw;
@@ -141,10 +141,7 @@ h = 768;
     size.setH(h);
 
     // canvasSize = (128*(size.getHalfWidth()/128).floor()) as double;
-    canvasSize = size.getHalfWidth()-pad;
-
-
-
+    canvasSize = size.getHalfWidth() - pad;
 
     return Scaffold(
       body: Padding(
@@ -174,23 +171,25 @@ h = 768;
                             child: SizedBox(
                               // width: pad*5,
                               child: FlatButton(
-                                minWidth: pad*5,
+                                  minWidth: pad * 5,
                                   onPressed: () {
                                     if (imageFile != null) {
                                       showImage(imageFile!, context, w);
                                     } else {
-                                      showDrawing(_screenshotController, context, w);
-                                      setState(() {});
+                                      showDrawing(
+                                          _screenshotController, context, w);
                                     }
                                     setState(() {});
                                   },
                                   child: Text(
                                     "next",
-                                    style: TextStyle(fontSize: size.getTitleFont()*0.8),
+                                    style: TextStyle(
+                                        fontSize: size.getTitleFont() * 0.8),
                                   ),
                                   color: Colors.blue,
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0))),
+                                      borderRadius:
+                                          BorderRadius.circular(10.0))),
                             ),
                           ),
                         ],
@@ -220,8 +219,9 @@ h = 768;
     );
   }
 
-  void showDrawing(ScreenshotController picture, BuildContext dialogContext, w) {
-    late Image image;
+  void showDrawing(
+      ScreenshotController picture, BuildContext dialogContext, w) {
+    Image? image;
     showDialog(
       context: context,
       builder: (context) {
@@ -234,12 +234,14 @@ h = 768;
               onPressed: () {
                 // newPainterController();
                 setState(() {
+
+                  imageFile = null;
                 });
                 Navigator.of(context, rootNavigator: true).pop(context);
               },
               child: Text(
                 "Cancel",
-                style: TextStyle(fontSize: size.getTitleFont()*0.8),
+                style: TextStyle(fontSize: size.getTitleFont() * 0.8),
               ),
               color: Colors.red,
               shape: RoundedRectangleBorder(
@@ -250,7 +252,7 @@ h = 768;
               minWidth: size.getPad() * 5,
               height: size.getPad() * 2,
               onPressed: () async {
-                setState((){
+                setState(() {
                   // newPainterController();
                 });
                 SharedPreferences sharedPrefs =
@@ -268,7 +270,7 @@ h = 768;
               },
               child: Text(
                 "Confirm",
-                style: TextStyle(fontSize: size.getTitleFont()*0.8),
+                style: TextStyle(fontSize: size.getTitleFont() * 0.8),
               ),
               color: Colors.green,
               shape: RoundedRectangleBorder(
@@ -289,13 +291,13 @@ h = 768;
           ),
           content: Container(
             width: size.getHalfWidth(),
-            height: size.getHeight()*0.7,
+            height: size.getHeight() * 0.7,
             child: Column(
               children: [
                 Expanded(
                   child: Container(
                     alignment: Alignment.center,
-                    child: FutureBuilder<Uint8List?>(
+                    child:FutureBuilder<Uint8List?>(
                       future: picture.capture(),
                       builder: (BuildContext context,
                           AsyncSnapshot<Uint8List?> snapshot) {
@@ -342,14 +344,14 @@ h = 768;
               height: size.getPad() * 2,
               onPressed: () {
                 setState(() {
-                // _controller = _controllerBackup;
-                // newPainterController();
-              });
+                  // _controller = _controllerBackup;
+                  // newPainterController();
+                });
                 Navigator.of(context, rootNavigator: true).pop('dialog');
               },
               child: Text(
                 "Cancel",
-                style: TextStyle(fontSize: size.getTitleFont()*0.8),
+                style: TextStyle(fontSize: size.getTitleFont() * 0.8),
               ),
               color: Colors.red,
               shape: RoundedRectangleBorder(
@@ -382,7 +384,7 @@ h = 768;
               },
               child: Text(
                 "Confirm",
-                style: TextStyle(fontSize: size.getTitleFont()*0.8),
+                style: TextStyle(fontSize: size.getTitleFont() * 0.8),
               ),
               color: Colors.green,
               shape: RoundedRectangleBorder(
@@ -406,7 +408,7 @@ h = 768;
           ),
           content: Container(
             width: size.getHalfWidth(),
-            height: size.getHeight()*0.7,
+            height: size.getHeight() * 0.7,
             decoration: BoxDecoration(
                 image: DecorationImage(
                   image: picture.image,
@@ -474,14 +476,13 @@ h = 768;
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-
             Text("Canvas",
                 style: TextStyle(
-                    fontSize: size.getTitleFont(), fontWeight: FontWeight.bold)),
+                    fontSize: size.getTitleFont(),
+                    fontWeight: FontWeight.bold)),
             Text("(If unable to draw, press Clear Button)")
           ],
         ),
-
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -578,7 +579,12 @@ h = 768;
                     width: canvasSize,
                     height: canvasSize,
                     child: AspectRatio(
-                        aspectRatio: 1 / 1, child: Painter(_controller!)),
+                      aspectRatio: 1 / 1,
+                      child: Screenshot(
+                        controller: _screenshotController,
+                        child: Painter(_controller!),
+                      ),
+                    ),
                   ),
           ),
         ],
