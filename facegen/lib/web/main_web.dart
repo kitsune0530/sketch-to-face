@@ -152,6 +152,7 @@ class _MainWebsiteState extends State<MainWebsite> {
               children: [
                 Column(
                   children: [
+                    Text("*This application is built for Web on PC only*"),
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
