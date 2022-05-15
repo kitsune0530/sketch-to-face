@@ -138,7 +138,7 @@ class WebApp extends StatelessWidget {
     //     home:  MainMenu()
     // );
     return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Sketch-to-Face',
         theme: ThemeData.light(),
         home:  MainWebsite()
     );
@@ -157,7 +157,7 @@ class MobileApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
     ]);
     return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Sketch-to-Face',
         theme: ThemeData.light(),
         home:  MainWebsite()
     );
