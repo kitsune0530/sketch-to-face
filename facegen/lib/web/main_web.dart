@@ -152,49 +152,53 @@ class _MainWebsiteState extends State<MainWebsite> {
               children: [
                 Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        buildBorderContainer(WebCanvas(w, h), pad),
-                        buildBorderContainer(WebDropdown(w, h), pad),
-                      ],
-                    ),
-                    SizedBox(
-                      width: w,
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            margin: EdgeInsets.all(pad),
-                            width: pad * 10,
-                            // height: pad * 2,
-                            child: SizedBox(
-                              // width: pad*5,
-                              child: FlatButton(
-                                  minWidth: pad * 5,
-                                  onPressed: () {
-                                    if (imageFile != null) {
-                                      showImage(imageFile!, context, w);
-                                    } else {
-                                      showDrawing(
-                                          _screenshotController, context, w);
-                                    }
-                                    setState(() {});
-                                  },
-                                  child: Text(
-                                    "next",
-                                    style: TextStyle(
-                                        fontSize: size.getTitleFont() * 0.8),
-                                  ),
-                                  color: Colors.blue,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(10.0))),
-                            ),
-                          ),
+                          buildBorderContainer(WebCanvas(w, h), pad),
+                          buildBorderContainer(WebDropdown(w, h), pad),
                         ],
                       ),
                     ),
+                    // SizedBox(
+                    //   width: w,
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       Container(
+                    //         margin: EdgeInsets.all(pad),
+                    //         width: pad * 10,
+                    //         // height: pad * 2,
+                    //         child: SizedBox(
+                    //           // width: pad*5,
+                    //           child: FlatButton(
+                    //             minWidth: pad * 5,
+                    //             onPressed: () {
+                    //               if (imageFile != null) {
+                    //                 showImage(imageFile!, context, w);
+                    //               } else {
+                    //                 showDrawing(
+                    //                     _screenshotController, context, w);
+                    //               }
+                    //               setState(() {});
+                    //             },
+                    //             child: Text(
+                    //               "next",
+                    //               style: TextStyle(
+                    //                   fontSize: size.getTitleFont() * 0.8),
+                    //             ),
+                    //             color: Colors.blue,
+                    //             shape: RoundedRectangleBorder(
+                    //               borderRadius: BorderRadius.circular(10.0),
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ],
@@ -234,7 +238,6 @@ class _MainWebsiteState extends State<MainWebsite> {
               onPressed: () {
                 // newPainterController();
                 setState(() {
-
                   imageFile = null;
                 });
                 Navigator.of(context, rootNavigator: true).pop(context);
@@ -258,6 +261,7 @@ class _MainWebsiteState extends State<MainWebsite> {
                 SharedPreferences sharedPrefs =
                     await SharedPreferences.getInstance();
                 sharedPrefs.setString("Gender", gender);
+                Navigator.of(context, rootNavigator: true).pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -297,7 +301,7 @@ class _MainWebsiteState extends State<MainWebsite> {
                 Expanded(
                   child: Container(
                     alignment: Alignment.center,
-                    child:FutureBuilder<Uint8List?>(
+                    child: FutureBuilder<Uint8List?>(
                       future: picture.capture(),
                       builder: (BuildContext context,
                           AsyncSnapshot<Uint8List?> snapshot) {
@@ -309,9 +313,8 @@ class _MainWebsiteState extends State<MainWebsite> {
                             // String out;
                             imageUint8 = snapshot.data!;
                             image = Image.memory(snapshot.data!);
-                            imageFile = image;
 
-                            return Image.memory(snapshot.data!);
+                            return image!;
                           default:
                             return const FractionallySizedBox(
                               widthFactor: 0.1,
@@ -615,6 +618,7 @@ class _MainWebsiteState extends State<MainWebsite> {
       width: size.getHalfWidth() - size.getPad(),
       height: size.getHeight(),
       child: Column(
+        // mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           Row(children: <Widget>[
             Text(
@@ -625,23 +629,52 @@ class _MainWebsiteState extends State<MainWebsite> {
                   color: Colors.black),
             ),
           ]),
-          Padding(
-            padding:
-                EdgeInsets.fromLTRB(w * 0.01, w * 0.01, w * 0.01, w * 0.01),
-            child: Column(
-              children: [
-                buildFutureDropdown("Skin Color", skinList),
-                buildFutureDropdown("Face Shape", shapeList),
-                buildFutureDropdown("Eyes", eyesList),
-                buildFutureDropdown("Nose", noseList),
-                buildFutureDropdown("Mouth", mouthList),
-                buildFutureDropdown("Ears", earsList),
-                buildFutureDropdown("Hair", hairList),
-                buildFutureDropdown("Eyebrows", eyebrowsList),
-                buildFutureDropdown("Beard", beardList),
-              ],
-            ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Padding(
+                padding:
+                    EdgeInsets.fromLTRB(w * 0.01, w * 0.01, w * 0.01, w * 0.01),
+                child: Column(
+                  children: [
+                    buildFutureDropdown("Skin Color", skinList),
+                    buildFutureDropdown("Face Shape", shapeList),
+                    buildFutureDropdown("Eyes", eyesList),
+                    buildFutureDropdown("Nose", noseList),
+                    buildFutureDropdown("Mouth", mouthList),
+                    buildFutureDropdown("Ears", earsList),
+                    buildFutureDropdown("Hair", hairList),
+                    buildFutureDropdown("Eyebrows", eyebrowsList),
+                    buildFutureDropdown("Beard", beardList),
+                  ],
+                ),
+              ),
+              Container(
+                child: FlatButton(
+                  minWidth: size.getPad() * 10,
+                  onPressed: () {
+                    if (imageFile != null) {
+                      showImage(imageFile!, context, w);
+                    } else {
+                      showDrawing(
+                          _screenshotController, context, w);
+                    }
+                    setState(() {});
+                  },
+                  child: Text(
+                    "next",
+                    style: TextStyle(
+                        fontSize: size.getTitleFont() * 0.8),
+                  ),
+                  color: Colors.blue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+              ),
+            ],
           ),
+
         ],
       ),
     );
