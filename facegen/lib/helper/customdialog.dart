@@ -40,7 +40,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: Container(
-        width: size.getHalfWidth(),
+        width: size.getWidth(),
         height: size.getHeight() / 2,
         child: Padding(
           padding: const EdgeInsets.all(10),
