@@ -609,12 +609,12 @@ class _WebSummaryState extends State<WebSummary> {
     );
   }
 
-  // Uint8List firstCaptured;
-  //
-  // void captureGen1() async{
-  //   Uint8List? captured = await secondController.capture();
-  //   firstCaptured = captured!;
-  // }
+  Uint8List? firstCaptured;
+  Uint8List? secondCaptured;
+
+  Future<Uint8List?> capture(ScreenshotController screenController) async{
+    return await screenController.capture();
+  }
 
 
   Column buildResultNoDes() {
@@ -630,14 +630,14 @@ class _WebSummaryState extends State<WebSummary> {
 
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(width:1),
-              ),
-              child: generatedNoDesImage![selectedNoDesIntex] != null
-                  ? Screenshot(
-                controller: secondController,
-                    child: Container(
+            Screenshot(
+              controller: secondController,
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(width:1),
+                ),
+                child: generatedNoDesImage![selectedNoDesIntex] != null
+                    ? Container(
                         width: this.canvasSize,
                         height: this.canvasSize,
                         decoration: BoxDecoration(
@@ -647,13 +647,13 @@ class _WebSummaryState extends State<WebSummary> {
                                   generatedNoDesImage![selectedNoDesIntex].image,
                             ),
                             ),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(border: Border.all(width: 1)),
+                        width: this.canvasSize,
+                        height: this.canvasSize,
                       ),
-                  )
-                  : Container(
-                      decoration: BoxDecoration(border: Border.all(width: 1)),
-                      width: this.canvasSize,
-                      height: this.canvasSize,
-                    ),
+              ),
             ),
           ],
         ),
@@ -674,10 +674,14 @@ class _WebSummaryState extends State<WebSummary> {
           icon: const Icon(Icons.save_alt_outlined),
           splashColor: Colors.black,
           onPressed: () async {
-            Uint8List? captured = await secondController.capture();
-            Uint8List secondCaptured = captured!;
+
+            dev.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CheckCapture 1 : "+secondCaptured.toString());
+
+            secondCaptured = await capture(secondController!);
+            dev.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ChecssskCapture 2 : "+secondCaptured.toString());
             await _webImageDownloader.downloadImageFromUInt8List(
-                uInt8List: secondCaptured,imageQuality: 100);
+                uInt8List: secondCaptured!,imageQuality: 100);
+            dev.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CheckCapture 3 : "+secondCaptured.toString());
           },
         ),
 
