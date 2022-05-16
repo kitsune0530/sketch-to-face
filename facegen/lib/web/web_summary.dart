@@ -77,9 +77,6 @@ class _WebSummaryState extends State<WebSummary> {
   final ScrollController controllerTwo = ScrollController();
 
   late Future<List<int?>> descriptionList;
-  ScreenshotController firstController = new ScreenshotController();
-  ScreenshotController secondController = new ScreenshotController();
-
 
   _WebSummaryState(Image image, Uint8List uint8list) {
 
@@ -563,34 +560,32 @@ class _WebSummaryState extends State<WebSummary> {
               style: TextStyle(
                   fontSize: size.getTitleFont(), fontWeight: FontWeight.bold)),
         ),
-        Screenshot(
-          controller: firstController,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(width:1),
-                ),
-                child: generatedImage![selectedIntex] != null
-                    ? Container(
-                        width: this.canvasSize,
-                        height: this.canvasSize,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                              fit: BoxFit.contain,
-                              image: generatedImage![selectedIntex].image,
-                            ),
-                            ),
-                      )
-                    : Container(
-                        decoration: BoxDecoration(border: Border.all(width: 1)),
-                        width: this.canvasSize,
-                        height: this.canvasSize,
-                      ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(width:1),
               ),
-            ],
-          ),
+              child: generatedImage![selectedIntex] != null
+                  ? Container(
+                      width: this.canvasSize,
+                      height: this.canvasSize,
+
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.contain,
+                            image: generatedImage![selectedIntex].image,
+                          ),
+                          ),
+                    )
+                  : Container(
+                      decoration: BoxDecoration(border: Border.all(width: 1)),
+                      width: this.canvasSize,
+                      height: this.canvasSize,
+                    ),
+            ),
+          ],
         ),
         Padding(
           padding: EdgeInsets.only(top: size.getPad(), bottom: size.getPad()),
@@ -609,12 +604,6 @@ class _WebSummaryState extends State<WebSummary> {
     );
   }
 
-
-  Future<Uint8List?> capture(ScreenshotController screenController) async{
-    return await screenController.capture();
-  }
-
-
   Column buildResultNoDes() {
     return Column(
       children: [
@@ -627,30 +616,27 @@ class _WebSummaryState extends State<WebSummary> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Screenshot(
-              controller: secondController,
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(width:1),
-                ),
-                child: generatedNoDesImage![selectedNoDesIntex] != null
-                    ? Container(
-                        width: this.canvasSize,
-                        height: this.canvasSize,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                              fit: BoxFit.contain,
-                              image:
-                                  generatedNoDesImage![selectedNoDesIntex].image,
-                            ),
-                            ),
-                      )
-                    : Container(
-                        decoration: BoxDecoration(border: Border.all(width: 1)),
-                        width: this.canvasSize,
-                        height: this.canvasSize,
-                      ),
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(width:1),
               ),
+              child: generatedNoDesImage![selectedNoDesIntex] != null
+                  ? Container(
+                      width: this.canvasSize,
+                      height: this.canvasSize,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.contain,
+                            image:
+                                generatedNoDesImage![selectedNoDesIntex].image,
+                          ),
+                          ),
+                    )
+                  : Container(
+                      decoration: BoxDecoration(border: Border.all(width: 1)),
+                      width: this.canvasSize,
+                      height: this.canvasSize,
+                    ),
             ),
           ],
         ),
@@ -672,11 +658,8 @@ class _WebSummaryState extends State<WebSummary> {
           splashColor: Colors.black,
           onPressed: () async {
 
-            Uint8List? secondCaptured = await capture(secondController);
-            dev.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CheckCapture 2 : "+secondCaptured.toString());
             await _webImageDownloader.downloadImageFromUInt8List(
-                uInt8List: secondCaptured!,imageQuality: 100);
-            dev.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CheckCapture 3 : "+secondCaptured.toString());
+                uInt8List: generatedNoDesByte![selectedNoDesIntex]!,imageQuality: 100);
           },
         ),
 
@@ -694,10 +677,8 @@ class _WebSummaryState extends State<WebSummary> {
               icon: const Icon(Icons.save_alt_outlined),
               splashColor: Colors.black,
               onPressed: () async {
-                Uint8List? captured = await firstController.capture();
-                Uint8List firstCaptured = captured!;
                 await _webImageDownloader.downloadImageFromUInt8List(
-                    uInt8List: firstCaptured,imageQuality: 100);
+                    uInt8List: generatedByte![selectedIntex]!,imageQuality: 100);
               },
             ),
             SizedBox(
