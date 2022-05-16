@@ -563,17 +563,17 @@ class _WebSummaryState extends State<WebSummary> {
               style: TextStyle(
                   fontSize: size.getTitleFont(), fontWeight: FontWeight.bold)),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(width:1),
-              ),
-              child: generatedImage![selectedIntex] != null
-                  ? Screenshot(
-                controller: firstController,
-                    child: Container(
+        Screenshot(
+          controller: firstController,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(width:1),
+                ),
+                child: generatedImage![selectedIntex] != null
+                    ? Container(
                         width: this.canvasSize,
                         height: this.canvasSize,
                         decoration: BoxDecoration(
@@ -582,15 +582,15 @@ class _WebSummaryState extends State<WebSummary> {
                               image: generatedImage![selectedIntex].image,
                             ),
                             ),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(border: Border.all(width: 1)),
+                        width: this.canvasSize,
+                        height: this.canvasSize,
                       ),
-                  )
-                  : Container(
-                      decoration: BoxDecoration(border: Border.all(width: 1)),
-                      width: this.canvasSize,
-                      height: this.canvasSize,
-                    ),
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
         Padding(
           padding: EdgeInsets.only(top: size.getPad(), bottom: size.getPad()),
@@ -609,8 +609,6 @@ class _WebSummaryState extends State<WebSummary> {
     );
   }
 
-  Uint8List? firstCaptured;
-  Uint8List? secondCaptured;
 
   Future<Uint8List?> capture(ScreenshotController screenController) async{
     return await screenController.capture();
@@ -627,7 +625,6 @@ class _WebSummaryState extends State<WebSummary> {
                   fontSize: size.getTitleFont(), fontWeight: FontWeight.bold)),
         ),
         Row(
-
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Screenshot(
@@ -675,10 +672,8 @@ class _WebSummaryState extends State<WebSummary> {
           splashColor: Colors.black,
           onPressed: () async {
 
-            dev.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CheckCapture 1 : "+secondCaptured.toString());
-
-            secondCaptured = await capture(secondController!);
-            dev.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ChecssskCapture 2 : "+secondCaptured.toString());
+            Uint8List? secondCaptured = await capture(secondController);
+            dev.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CheckCapture 2 : "+secondCaptured.toString());
             await _webImageDownloader.downloadImageFromUInt8List(
                 uInt8List: secondCaptured!,imageQuality: 100);
             dev.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CheckCapture 3 : "+secondCaptured.toString());
