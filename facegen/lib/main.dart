@@ -78,6 +78,7 @@ List<String> eyebrowsList = [
 List<String> beardList = [
   'None',
   'Mustache short',
+  'Mustache long',
   'Beard short',
   'Beard Long'
 ];
